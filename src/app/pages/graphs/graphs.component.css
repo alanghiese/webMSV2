@@ -1,0 +1,7 @@
+.btnCustom{
+	background-color: rgb(255, 179, 102); 
+	border: 0px; 
+	color: black;
+	cursor: pointer !important;
+	border-radius: 4px;
+}

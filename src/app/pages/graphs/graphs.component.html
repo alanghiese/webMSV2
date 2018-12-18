@@ -1,0 +1,382 @@
+<filters></filters>
+<closebutton></closebutton>
+
+
+<div  class="row" style="max-width: 100%">  
+	<div class="col-md-1 " > 
+		<buttons></buttons>
+    </div>
+    <br>
+	<div class="col-md-11" style="margin-bottom: 50px;"> 
+		<div class="row-md" style="margin-right: 15px">
+			<div class="input-group input-group-sm mb-3" >
+
+				<div class="input-group mb-3" style="max-width: 50%">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon1"><strong>Tipo de gráfico</strong></span>
+					</div>
+					<select ng-model="selectedGraphType" #type class="form-control"
+					(change)="onChangeType()" [(ngModel)]="this.graphtype">
+						<!-- <option value=0> Estadisticas de horarios ofrecidos/turnos atendidos </option> -->
+						<option value=1> Estadisticas de turnos por demora de medicos/pacientes </option>
+						<option value=2> Estadisticas de turnos WEB vs Escritorio </option>
+						<option value=3> Estadisticas de estado de turnos </option>
+						<option value=4> Estadisticas de estado de turnos (Web vs Escritorio)</option>
+					</select>
+				</div>
+
+				
+				
+				<button type="button" class="btn btnCustom" (click)="filter()" style="margin-left: 30px">
+					Visualizar
+				</button>
+
+				<button *ngIf="isDelay() || isWebVsDesktop()" type="button" class="btn  btnCustom" (click)="stackBars()" style="margin-left: 30px">
+					Juntar/Separar Barras
+				</button>
+
+				
+
+
+				<div class="input-group mb-3" style="max-width: 50%">
+					<div class="form-check">
+			    		<input type="checkbox" class="form-check-input" name="save" id="chk" [(ngModel)] = "keepData">
+				    	<label class="form-check-label" for="chk">
+				    		Mantener los datos
+				    	</label>
+			  		</div>
+				</div>
+
+				
+
+			</div>
+		</div>
+		<hr>
+
+		<div *ngIf="!isReady()" style="margin-top: -15%">
+			<loading></loading>
+		</div>
+
+
+		<div  *ngIf="isReady()">
+			<span><i><small>Cantidad de turnos cargados: {{ getTotalTurns() }}</small></i></span>
+			<br>
+			<span><i><small>Se muestran solo los doctores que tengan turnos cargados</small></i></span>
+			
+			<br>
+			
+			<button class="btn btnCustom"  id="btnInfo" data-toggle="modal" data-target="#turnsInfo" >
+				Ver detalle de: {{ nameButton }}
+			</button>
+			
+			<div *ngIf = "isDelay()">
+
+				
+
+				<div  style="display: block">
+					<canvas baseChart
+					    [datasets]="datasOfTheDoctors"
+					    [labels]="nameOfTheDoctors"
+					    [options]="optionsDelays"
+					    [legend]="barChartLegend"
+					    [chartType]="barChartType"
+					    (chartClick)="chartClicked($event)">
+				    </canvas>
+				</div>
+			  
+
+				
+
+
+
+			</div>
+
+			<!-- Modal  de delays y webVSdesktop-->
+				<div class="modal fade bd-example-modal-lg" id="turnsInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog modal-lg" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Tunos de: {{ nameButton }} </h5>
+				        <button class="none" (click)="exportAsXLSX()" style="max-width: 45px; margin-left: 15px" title="Descargar tabla">
+							<img src="/MediwareHub/webMS/assets/excel.png" title="Descargar .xlsx"
+							style="	max-height: 35px; 
+									max-width: 35px;
+									margin-left:-10px; 
+									margin-top: -3px;">
+						</button>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        
+						
+						<table class="table table-hover">
+						  <thead>
+						    <tr>
+						      <th>Paciente</th>
+						      <th>Fecha del turno</th>
+						      <th>Hora del turno</th>
+						      <th>Hora de llegada</th>
+						      <th>Hora de atencion</th>
+						    </tr>
+						  </thead>
+						  <tbody style="font-size: 10px">
+						    <tr *ngFor="let data of arrayPatients">
+						      <td> {{ data.nomUsuario }} </td>
+						      <td> {{ data.fecha1 | date: "dd/MM/yyyy"}} </td>
+						      <td> {{ data.campo2 }} </td>
+						      <td> {{ data.campo3 }}</td>
+						      <td> {{ data.campo4 }}</td>
+						    </tr>		
+						  </tbody>
+						</table>
+
+
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				
+
+			<div *ngIf="isWebVsDesktop()">
+
+				
+				
+				<div  style="display: block">
+					<canvas baseChart
+					    [datasets]="dataTurns"
+					    [labels]="nameOfTheDoctorsTurns"
+					    [options]="optionsTurns"
+					    [legend]="barChartLegend"
+					    [chartType]="barChartType"
+					    (chartClick)="chartClicked($event)">
+				    </canvas>
+				</div>
+				<div class="row m-0">
+					<h5>Tabla de valores WEB vs ESCRITORIO</h5> 
+					<span *ngIf="showTableWebvsDesktop()" (click)="changeBooleanWebVsDesktop()" style="cursor: pointer; margin-left: 10px">Ocultar</span>
+					<span *ngIf="!showTableWebvsDesktop()" (click)="changeBooleanWebVsDesktop()" style="cursor: pointer; margin-left: 10px">Mostrar</span>
+				</div> 
+				<table *ngIf="showTableWebvsDesktop()" class="table table-hover">
+				  <thead>
+				    <tr>
+				      <th>Medico</th>
+				      <th>Turnos WEB</th>
+				      <th>Turnos ESCRITORIO</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr *ngFor="let doc of webVSdesktopArr">
+				      <td>{{ doc.name }}</td>
+				      <td>{{ doc.web }}</td>
+				      <td>{{ doc.desktop }}</td>
+				    </tr>
+				  </tbody>
+				</table>
+
+			
+			
+		    
+
+				
+
+				<!-- Modal -->
+				<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog modal-lg" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Grafico de cantidad de turnos totales </h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        
+						
+						<div style="display: block">
+					      <canvas baseChart
+					              [data]="pieChartData"
+					              [labels]="pieChartLabels"
+					              [chartType]="pieChartType"></canvas>
+					    </div>
+<!-- 
+					              (chartClick)="chartClicked($event)"s -->
+
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+
+
+
+				<div class="row m-0">
+					<div>
+						<h5>Tabla de valores totales WEB vs ESCRITORIO</h5> 
+					</div>
+					<button type="button" class="btns btn-sm btnCustom" data-toggle="modal" data-target="#exampleModal" style="margin-left: 15px" >
+						Ver grafico de turnos totales
+					</button>
+					
+				</div>
+				<br>
+				<table class="table table-hover">
+				  <thead>
+				    <tr>
+				    	<th></th>
+				      	<th>Turnos WEB</th>
+				      	<th>Turnos ESCRITORIO</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr>
+				    	<td>Promedios</td>
+				      	<td> {{ this.avgs[0] }} </td>
+				      	<td> {{ this.avgs[1] }} </td>
+				    </tr>
+				    <tr>
+				    	<td>Maximos</td>
+				      	<td> {{ this.minMax[2] }} </td>
+				      	<td> {{ this.minMax[3] }} </td>
+				    </tr>
+				    <tr>
+				    	<td>Minimos</td>
+				      	<td> {{ this.minMax[0] }} </td>
+				      	<td> {{ this.minMax[1] }} </td>
+				    </tr>
+				    <tr>
+				    	<td>Totales</td>
+				      	<td> {{ this.pieChartData[0] }} </td>
+				      	<td> {{ this.pieChartData[1] }} </td>
+				    </tr>
+				  </tbody>
+				</table>
+
+			</div>
+
+			<div *ngIf="isState()">
+				
+
+			    <div style="display: block">
+			      <canvas baseChart
+			              [data]="stateData"
+			              [labels]="stateLabels"
+			              [chartType]="pieChartType"
+			              (chartClick)="chartClicked($event)"></canvas>
+			    </div>
+
+			    <table class="table table-hover">
+				  <thead>
+				    <tr>
+				    	<th></th>
+				      	<th>Pacientes atendidos</th>
+				      	<th>Pacientes ausente</th>
+				      	<th>Pacientes en sala de espera</th>
+				      	<th>Falto</th>
+				      	<th>Falto con aviso</th>
+				    </tr>  
+				  </thead>
+				  <tbody>
+				    <tr>
+				    	<td>Cantidad</td>
+				      	<td> {{ this.stateData[1] }} </td>
+				      	<td> {{ this.stateData[0] }} </td>
+				      	<td> {{ this.stateData[2] }} </td>
+				      	<td> {{ this.stateData[3] }} </td>
+				      	<td> {{ this.stateData[4] }} </td>
+				    </tr>
+				  </tbody>
+				</table>
+
+			</div>
+
+			<div *ngIf="isStateCombinedWithWebVsDesktop()"> 
+
+				<br>
+				<button class="btnCustom" (click)= "changeSizeBoolean()"><< Cambiar al otro gráfico >></button>
+
+				<br><br><br>
+
+				<div *ngIf="sizeBoolean" class="row">
+					<div class="col-6" style="color: rgb(197,104,0); font-size: 25px">
+						WEB (Cantidad de turnos: {{ this.combinedDataWeb[0] + this.combinedDataWeb[1] }})
+					</div>
+					<div class="col-6">
+						ESCRITORIO (Cantidad de turnos: {{ this.combinedDataDesktop[0] + this.combinedDataDesktop[1] }})
+					</div>
+				</div>
+
+				<div *ngIf="!sizeBoolean" class="row">
+					<div class="col-6">
+						WEB (Cantidad de turnos: {{ this.combinedDataWeb[0] + this.combinedDataWeb[1] }})
+					</div>
+					<div class="col-6" style="color: rgb(197,104,0); font-size: 25px">
+						ESCRITORIO (Cantidad de turnos: {{ this.combinedDataDesktop[0] + this.combinedDataDesktop[1] }})
+					</div>
+				</div>
+
+
+				<p> Porcentaje de atendidos: </p>
+				<div *ngIf="sizeBoolean" class="row">
+					<div class="col-8" >
+						
+						<div style="display: block">
+					      <canvas baseChart
+					              [data]="attendedWeb"
+					              [labels]="attendedLabels"
+					              [chartType]="pieChartType"
+					              [options]="pieChartOptions" 
+					              (chartClick)="chartClickedCombined($event,'MediWeb')"></canvas>
+					    </div></div>
+					<div class="col-4" >
+						
+						<div style="display: block">
+					      <canvas baseChart
+					              [data]="attendedDesktop"
+					              [labels]="attendedLabels"
+					              [chartType]="pieChartType"
+					              [options]="pieChartOptions" 
+					              (chartClick)="chartClickedCombined($event,'escritorio')"></canvas>
+					    </div></div>
+				</div>
+
+				<div *ngIf="!sizeBoolean" class="row">
+					<div class="col-4" >
+						
+						<div style="display: block">
+					      <canvas baseChart
+					              [data]="attendedWeb"
+					              [labels]="attendedLabels"
+					              [chartType]="pieChartType"
+					              [options]="pieChartOptions" 
+					              (chartClick)="chartClickedCombined($event,'MediWeb')"></canvas>
+					    </div></div>
+					<div class="col-8" >
+						
+						<div style="display: block">
+					      <canvas baseChart
+					              [data]="attendedDesktop"
+					              [labels]="attendedLabels"
+					              [chartType]="pieChartType"
+					              [options]="pieChartOptions" 
+					              (chartClick)="chartClickedCombined($event,'escritorio')"></canvas>
+					    </div></div>
+				</div>
+
+				<br>
+
+			</div>
+
+
+		</div>
+	</div>
+</div>
+
+
+

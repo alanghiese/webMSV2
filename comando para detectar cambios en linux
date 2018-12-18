@@ -1,0 +1,5 @@
+sudo nodemon --exec ng serve
+
+si el puerto esta en uso 
+sudo netstat -tlnp para saber que lo esta usando
+kill -9 $PID para cerrar

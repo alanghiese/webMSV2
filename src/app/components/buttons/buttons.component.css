@@ -1,0 +1,10 @@
+.btn-circle {
+	margin-top: 20px;
+	cursor: pointer;
+    width: 39px !important;
+    height: 39px !important;
+    border-radius: 39px !important;
+    outline: 0;
+
+}
+

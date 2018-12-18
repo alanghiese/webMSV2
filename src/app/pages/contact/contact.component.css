@@ -1,0 +1,17 @@
+a:link {
+    color: green;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:visited {
+    color: green;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+a:hover {
+    font-size: 40px;
+    background-color: transparent;
+}
+

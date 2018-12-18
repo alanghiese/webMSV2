@@ -1,6 +1,29 @@
 # WebMS
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.5.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.5.
+`npm install -g @angular/cli`
+
+## instal npm in project
+
+Run `npm install` inside project folder
+
+## install ng-bootstrap (required angular 5+ and bootstrap 4+)
+
+Run `npm install --save @ng-bootstrap/ng-bootstrap` 
+
+## install charjs 
+
+Run `npm install ng2-charts --save`
+and then
+Run `npm install chart.js --save`
+
+
+## install file-saver and xlsx
+Run `npm install file-saver --save`
+and
+Run `npm install xlsx --save`
+
+
 
 ## Development server
 

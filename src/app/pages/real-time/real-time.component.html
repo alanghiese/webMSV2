@@ -1,0 +1,192 @@
+<filters></filters>
+<div  class="row" style="max-width: 100%">  
+	<div class="col-md-1" > 
+		<buttons></buttons>
+    </div>
+    <div class="col-md-11" style="margin-bottom: 50px;"> 
+		<div class="row-md">
+			<h1>
+			  Estadisticas en tiempo real
+			</h1>
+
+			<div class="input-group input-group-sm mb-3">
+				<div class="input-group mb-3" style="max-width: 350px;">
+					<div class="input-group-prepend">
+						<span class="input-group-text" id="basic-addon1" title="Tiempo de recarga">
+							<strong>Tiempo (en minutos) de recarga</strong>
+						</span>
+					</div>
+					<select ng-model="time" #time (change)="setTime(time.value)" title="Tiempo de recarga"
+					class="form-control" style="max-width: 200px;">
+						<option>5</option>
+						<option>10</option>
+						<option>15</option>
+						<option>20</option>
+					</select>
+				</div>
+				<button class="btn btn-warning mb-3" style="background-color: rgb(255, 179, 102); border: 0px; color: white; color:black; margin-left: 10px"
+				(click) = "refresh()"  ngbPopover="Actualizar ahora" triggers="mouseenter:mouseleave">
+					Actualizar ahora
+				</button>
+			</div>
+
+		</div>
+
+
+		<div *ngIf="!isReady()" style="margin-top: -15%">
+			<loading></loading>
+		</div>
+
+		<div *ngIf="isReady()" class="input-group mb-6" style="margin-bottom: 50px;">
+			
+			
+			<div style="width: 49%"> 
+				
+
+			    <div>
+			       <div>
+						<span><i><small>Cantidad de turnos cargados: {{ getTotalTurns() }}</small></i></span>
+						<br>
+						<span><i><small>Se muestran solo los doctores que tengan turnos cargados</small></i></span>
+						<br>
+						<span><i><small>
+							Los cantidad de turnos cargados de esta tabla corresponde con la cantidad de pacientes atendidos
+						</small></i></span>
+						
+						<div>
+							<div  style="display: block" data-toggle="modal" data-target="#exampleModal">
+								<canvas baseChart
+								    [datasets]="datasOfTheDoctors"
+								    [labels]="nameOfTheDoctors"
+								    [options]="optionsDelays"
+								    [legend]="barChartLegend"
+								    [chartType]="barChartType"
+								    (chartHover)="chartHovered($event)"
+								    (chartClick)="chartClicked($event)">
+							    </canvas>
+							    <!-- (chartClick)="chartClicked($event)" -->
+							</div>
+						  
+						</div>
+					</div>
+					<br>
+			      <span><i><small>clic en la grafica para expandir</small></i></span>
+			      <!-- <button class="btn btn-warning my-2 my-sm-0" style="background-color: rgb(255, 179, 102); border: 0px; color: white; color:black"
+			      data-toggle="modal" data-target="#exampleModal">
+			      	<b>AGRANDAR</b>
+			      </button> -->
+			    </div>
+
+
+			</div>
+
+			<div style="width: 49%">
+				<p style="font-size: 20px"><strong>INDICADORES:</strong></p>
+				<p>Pacientes en sala de espera: {{ stateData[2] }} </p>
+				<p>Pacientes restantes: {{stateData[0]}} </p>
+				<p>Pacientes que no acudieron: {{stateData[5]}} </p>
+				<p>Pacientes atendidos: {{stateData[1]}} </p>
+				<p>Falta: {{stateData[3]}} </p>
+				<p>Falta con aviso: {{stateData[4]}} </p>
+			</div>
+
+
+			<div>
+				<span><i>La pagina se refrescara cada {{ this.timeToRefresh / 60000 }} minuto/s.</i></span>
+				<span><i> {{ this.lastUpdate }} </i> </span>
+			</div>
+
+
+		</div>
+
+		<button (click)="open(modal2)" id="expand" hidden="true">open modal</button>
+
+
+		<ng-template #modal2 let-c="close" let-d="dismiss">
+		  <div class="modal-header">
+		    <h4 class="modal-title">Informacion expandida:</h4>
+		    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+		      <span aria-hidden="true">&times;</span>
+		    </button>
+		  </div>
+		  <div class="modal-body">
+		    
+		  	<table class="table table-hover">
+			  <thead>
+			    <tr>
+			      <th>Paciente</th>
+			      <th>Fecha del turno</th>
+			      <th>Hora del turno</th>
+			      <th>Hora de llegada</th>
+			      <th>Hora de atencion</th>
+			    </tr>
+			  </thead>
+			  <tbody style="font-size: 10px">
+			    <tr *ngFor="let data of arrayPatients">
+			      <td> {{ data.nomUsuario }} </td>
+			      <td> {{ data.fecha1 | date: "dd/MM/yyyy"}} </td>
+			      <td> {{ data.campo2 }} </td>
+			      <td> {{ data.campo3 }}</td>
+			      <td> {{ data.campo4 }}</td>
+			    </tr>		
+			  </tbody>
+			</table>
+
+
+		  </div>
+		  <!-- <div class="modal-footer">
+		    <button type="button" class="btn btn-secondary" >Cerrar</button>
+		  </div> -->
+		</ng-template>
+
+
+
+
+		<!-- Modal -->
+		<div class="modal fade bd-example-modal-lg sizeBox" #exampleModal id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class=" modal-dialog modal-lg modify">
+		    <div class="modal-content ">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Grafico de demora de medicos</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        
+				
+				<div style="display: block" data-toggle="modal" data-target="#exampleModal">
+			        <div  *ngIf="isReady()">
+						<span><i><small>Cantidad de turnos cargados: {{ getTotalTurns() }}</small></i></span>
+						<br>
+						<span><i><small>Se muestran solo los doctores que tengan turnos cargados</small></i></span>
+						
+						<div>
+							<div  style="display: block">
+								<canvas baseChart
+								    [datasets]="datasOfTheDoctors"
+								    [labels]="nameOfTheDoctors"
+								    [options]="optionsDelays"
+								    [legend]="barChartLegend"
+								    [chartType]="barChartType"
+								    (chartHover)="chartHovered($event)"
+								    (chartClick)="chartClicked($event)">
+							    </canvas>
+							</div>
+							<span><i><small>
+								Los cantidad de turnos cargados de esta tabla corresponde con la cantidad de pacientes atendidos
+							</small></i></span>
+						  
+						</div>
+					</div>
+
+		      </div>
+		      <!-- <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal" title="Cerrar">Cerrar</button>
+		      </div> -->
+		    </div>
+		  </div>
+		</div>
+	</div>
+</div>
+

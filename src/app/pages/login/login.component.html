@@ -1,0 +1,61 @@
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+
+                    <!-- form card login -->
+                    <div class="card rounded-0" style="background-color:  rgb(255, 216, 179); border-radius: 25px !important; text-align: center">
+                        <div class="card-header">
+                            <h3 class="mb-0">Conectarse</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="form" #formLogin = "ngForm" role="form" autocomplete="off" id="formLogin" novalidate="" (ngSubmit)="login()">
+                                
+                                <div class="form-group">
+								    <label style="font-size: 20px">Usuario</label>
+								    <input type="text" class="form-control form-control-lg rounded-1" id="user" required 
+                                    placeholder="Usuario" title="Ingrese usuario"
+								    	name="user" #user="ngModel" [(ngModel)] = "acc.user" required style="text-align: center"> 
+								</div> 
+                                <!-- [disabled]="loading"  estaba entre required y style -->
+
+
+								<div class="form-group">
+								    <label style="font-size: 20px">Contraseña</label>
+								    <input type="password" class="form-control form-control-lg rounded-1" id="password" placeholder="Contraseña" title="Ingrese contraseña" 
+								    	name="password" #password="ngModel" [(ngModel)] = "acc.password" require style="text-align: center">
+								</div>
+                                    <!-- [disabled]="loading"  estaba entre required y style -->
+
+                                <div>
+									<div class="custom-control form-control-lg custom-checkbox"  style="text-align: left !important">
+									    <input type="checkbox" class="custom-control-input" id="save" name = "save" #save="ngModel" [(ngModel)] = "acc.checked">
+									    <label class="custom-control-label" for="save" style="font-size: 15px">Recordar datos</label>
+									</div>
+                                </div>
+
+                                <button type="submit" class="btn btn-success btn-lg float-right" [disabled]="!formLogin.form.valid">
+									Entrar
+								</button>
+                                
+                            </form>
+                        </div>
+                        <!--/card-block-->
+                    </div>
+                    <!-- /form card login -->
+
+                </div>
+
+
+            </div>
+            <!--/row-->
+
+        </div>
+        <!--/col-->
+    </div>
+    <!--/row-->
+</div>
+<!--/container-->
+
+

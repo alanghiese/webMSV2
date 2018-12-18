@@ -1,0 +1,30 @@
+.bg-orange{
+    background-color: rgb(255,192,128);
+    box-shadow: 0px 1px 5px;
+}
+
+a:hover{
+	text-decoration: none;
+}
+
+.dropdownButton{
+	background-color: rgb(255, 179, 102); 
+	border: 0px; 
+	color: black; 
+	cursor: pointer; 
+	text-align: center;
+}
+
+
+.dropdownContainer{
+	background-color: rgb(255, 179, 102); 
+	cursor: pointer;
+	width: 100%
+}
+
+.userConnected{
+	background-color: rgb(255, 179, 102); 
+	border: 0px; 
+	color: black;
+	cursor: pointer !important;
+}

@@ -1,0 +1,12 @@
+.CloseButton{
+    position: absolute;
+    top: 200px;
+    right: 0;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    text-decoration: none;
+    color: white;
+    border: none;
+    border-radius: 3px 0 0 3px;
+}

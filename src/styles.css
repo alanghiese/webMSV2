@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+footer {
+    position: fixed;
+    bottom: 0%;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+    background-color: rgb(255, 216, 177);
+} 
+
+body {
+    background-color:rgb(255, 216, 177);
+}
+.active{
+	
+    box-shadow: 1px 1px 3px;
+}
+
+
+
+
