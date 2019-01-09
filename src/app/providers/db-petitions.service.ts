@@ -45,13 +45,10 @@ export class DbPetitionsService {
 		.set(PARAMETERS.CLIENT, dataSource);
 
 		const url = `${API_URL_BASE}/${API_ENDPOINTS.connectToClient}`;
-		console.log(url)
 		return this.http.get<changeClientResponse>(url, {params: params}) //JSONResponse
 		.pipe(
 			map(
 				resp => { 
-					console.log("Cliente: ");
-					console.log(resp);
           			this.session.setActiveClient(resp.data);
 					return resp;
 				}),

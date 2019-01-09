@@ -36,6 +36,7 @@ import { TurnsComponent } from './pages/turns/turns.component';
 import { RealTimeComponent } from './pages/real-time/real-time.component';
 import { LoginComponent } from './pages/login/login.component';
 import { routing, appRoutingProviders } from './app-routing.module';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { routing, appRoutingProviders } from './app-routing.module';
     MyTurnsComponent,
     TurnsComponent,
     RealTimeComponent,
-    LoginComponent
+    LoginComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

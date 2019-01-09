@@ -73,7 +73,6 @@ export class GraphsComponent implements OnInit {
 
 
 	ngOnInit() {
-		console.log(this.appComponent.filter)
 		//borro el intervalo
 		clearTimeout(this.appComponent.interval);
 

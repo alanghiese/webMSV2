@@ -1,0 +1,103 @@
+/*.btnadd{
+	background-color: blue;
+	border: none;
+	border-radius: 35px;
+	max-width: 35px !important;
+	max-height: 35px !important;
+	width:35px !important;
+	height: 35px !important;
+	background-image: url("/assets/addbutton.png");
+
+	background-position: center; 
+	background-repeat: no-repeat; 
+	background-size: cover; 
+}*/
+
+
+
+.btnadd:hover {
+    transform: scale(1.055);
+}
+
+.btnadd:active {
+    transform: scale(0.90);
+}
+
+.input-custom{
+	max-width: 150px;
+	text-align: right;
+}
+
+.padding{
+	padding: 10px;
+}
+
+.btn-custom	{
+	padding: 7px;
+	border-radius: 5px;
+	background-color: #FFC080; 
+	border: 0px !important;
+	color: #F37A21;
+	font-weight: bold;
+	/*padding: 15px 32px;*/
+	text-align: center;
+	text-decoration: none;
+	/*display: inline-block;*/
+	/*font-size: 16px;*/
+}
+
+.btn-custom:hover{
+	background-color: #F37A21;
+	color: white;
+}
+
+.btn-custom:active{
+    transform: scale(0.90);
+	background-color: #F37A21;
+}
+
+.btn-custom,
+.btn-custom:active,
+.btn-custom:hover,
+.btn-custom:visited,
+.btn-custom:focus{
+	outline: none !important;
+	border: 0px !important;
+}
+
+
+.calendar{
+	text-align: right;
+	display: inline-block;
+	width: 20%;
+}
+
+.calendarGrid{
+	width: 80%;
+	border: 1px solid black;
+}
+
+.calendarContainer{
+	width: 100%;
+    position: absolute;
+
+}
+
+/*body,html,div{
+	background-color: #ffc68e ;
+}*/
+
+.head{
+	width: 100%;
+	padding: 15px;	
+}
+
+
+.selectDoctor{
+	width: 24vw;
+	display: inline-block;
+}
+
+.buttons{
+	width: 72vw;
+}

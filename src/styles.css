@@ -1,25 +1,83 @@
 footer {
-    position: fixed;
-    bottom: 0%;
-    width: 100%;
-    height: 30px;
-    line-height: 30px;
+  position: fixed;
+  bottom: 0%;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  /*nada es seleccionable con lo de abajo*/
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */
 }
 
-html {
-    position: relative;
-    min-height: 100%;
+
+
+html,body {
+    /*position: relative;*/
+    min-height: 100vh;
     background-color: rgb(255, 216, 177);
+
+    /*nada es seleccionable con lo de abajo*/
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;          /* Likely future */
 } 
 
-body {
-    background-color:rgb(255, 216, 177);
-}
-.active{
-	
-    box-shadow: 1px 1px 3px;
+
+button:focus{
+    outline: none !important;
 }
 
 
+img{
+    outline: none;
+}
 
+
+/*
+* boton redondo con imagen centrada y efectos al hacer click y pasar por arriba
+*/
+.btnIMG{
+  margin-left: 10px;
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-size: cover; 
+  /*
+  * este background-image es un valor por defecto, solo sirve para 1 caso
+  * en los demas casos que se usa esta clase hay que redefinir este atributo
+  */
+  background-image: url("/assets/addbutton.png");
+  width: 36px;
+  height: 36px;
+  /*overflow: hidden;*/
+
+
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  background-color: coral;
+
+
+
+  border: none;
+  cursor: pointer;
+  /*box-shadow: 0 0 10px rgba(0, 0, 0, .9);*/
+  /*-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .9);*/
+  /*-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .9);*/
+}
+
+.btnIMG:hover{
+  transform: scale(1.05);
+}
+
+.btnIMG:active{
+  transform: scale(0.90);
+}
+
+
+.fake{
+  color: transparent;
+}
 

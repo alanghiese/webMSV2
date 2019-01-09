@@ -10,8 +10,8 @@ import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  templateUrl: './app.component.html?v=${new Date().getTime()',
+  styleUrls: ['./app.component.css?v=${new Date().getTime()'],
   providers: [ DbPetitionsService, EncoderDecoderService ]
 })
 
@@ -53,7 +53,7 @@ export class AppComponent {
 	    	else
         		this.router.navigate([PAGES.LOGIN]);
 		*/
-
+		localStorageModifications.changeLoading(BOOLEAN_VAL.FALSE);
 	    
 	    this.filter = new Filter(
 	    							COMMON_WORDS.EMPTY_CHAR,
@@ -72,6 +72,8 @@ export class AppComponent {
 	ngOnInit(){
 		if(window.innerHeight > window.innerWidth)
     		alert(ERRORS.BEST_EXPERIENCIE);
+
+
 
 	}
 

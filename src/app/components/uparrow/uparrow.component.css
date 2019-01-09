@@ -4,9 +4,22 @@
     right: 15px;
     opacity: 0;
     transition: all .2s ease-in-out;
+    margin-bottom: 70px;
 }
 
 .show-scroll {
     opacity: 1;
     transition: all .2s ease-in-out;
+}
+
+.orange{
+	background-color: rgb(247, 81, 0) !important;
+	border: 1px solid rgb(247, 81, 0) !important;
+	border-radius: 5px;
+	padding: 5px;
+}
+
+.orange:hover {
+  background-color: rgb(255, 255, 255) !important; 
+  color: black;
 }

@@ -5,36 +5,20 @@
 
 <div *ngIf="!isLoading()">
 
-  <navBar></navBar> <!-- class="fixed-top" -->
-  <body>
+  <navBar></navBar> 
+  <!-- <body> -->
      
 
-    <div  class="row" style="max-width: 100%">  
-      <br>
-        <!-- <div class="col-md-1 buttons"> 
-            <buttons *ngIf="isLogged()"></buttons>
-        </div>
-           -->
-
-        <div class="col-md-12" style="margin-left: 15px"> 
-          <!--  && !isNotFilter() -->
-          <!-- id="filters" -->
-          <!--<div id="filters">
-              <filters *ngIf="isLogged()"></filters>
-            </div>-->
-            <router-outlet></router-outlet>
-        </div>
-    </div>
-    <!-- <div *ngIf="!emptyScreen">
-      <p>sin filtros</p>
-      <router-outlet></router-outlet>
-    </div> -->
+    
+  <router-outlet ></router-outlet>
+  
 
     
 
-  </body>
+  <!-- </body> -->
 
-  <Footer style="user-select: none;"></Footer>
+  <Footer></Footer>
+
 </div>
   <uparrow></uparrow>
 

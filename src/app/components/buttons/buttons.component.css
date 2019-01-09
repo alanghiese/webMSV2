@@ -1,10 +1,26 @@
-.btn-circle {
+.margins {
 	margin-top: 20px;
-	cursor: pointer;
-    width: 39px !important;
-    height: 39px !important;
-    border-radius: 39px !important;
-    outline: 0;
+    margin-right: 10px !important;
 
+}
+
+.graphsIMG{
+    background-image: url("/assets/btnGraph.png");
+}
+.showturnsIMG{
+    background-image: url("/assets/btnTurn.png");
+}
+.realtimeIMG{
+    background-image: url("/assets/btnNow.png");
+}
+.clearIMG{
+    background-image: url("/assets/close.png");
+}
+
+
+
+.btn-image{
+	margin-left:-10px !important; 
+	margin-top: -3px !important;
 }
 

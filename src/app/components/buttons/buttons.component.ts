@@ -8,7 +8,7 @@ import { AppComponent } from '../../app.component';
 })
 export class ButtonsComponent implements OnInit {
 
-  constructor(private appComponent: AppComponent) {}
+  constructor( private appComponent: AppComponent ) {}
 
 
   ngOnInit() {

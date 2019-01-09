@@ -24,6 +24,10 @@ and
 Run `npm install xlsx --save`
 
 
+## install angular-calendar
+Run `npm install --save angular-calendar date-fns`
+Reference to GitHub: `https://github.com/mattlewis92/angular-calendar#getting-started`
+
 
 ## Development server
 

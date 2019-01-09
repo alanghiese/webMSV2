@@ -38,18 +38,6 @@ export class FiltersComponent implements OnInit {
 				public appComponent: AppComponent
 				){ 
 
-		/*if (this.appComponent.filter.selSince == COMMON_WORDS.EMPTY_CHAR){
-	  		this.modelSince = {day: 1, month: now.getMonth() + 1, year: now.getFullYear() };
-  		  	this.appComponent.filter.selSince = this.modelSince.year + '-' + this.modelSince.month + '-' + this.modelSince.day;
-  			console.log(this.modelSince)
-  		}
-		if (this.appComponent.filter.selSince == COMMON_WORDS.EMPTY_CHAR){
-	  		var lastDay = this.lastday(now.getFullYear(),now.getMonth());
-			this.modelUntil = {day: lastDay, month: now.getMonth() + 1, year: now.getFullYear() };
-		  	this.appComponent.filter.selUntil = this.modelUntil.year + '-' + this.modelUntil.month + '-' + this.modelUntil.day;
-		}*/
-
-
 		//seteo las fechas de ser necesario
 		if (this.appComponent.filter.selUntil != COMMON_WORDS.EMPTY_CHAR){
 			let d: Date = this.convertToDate(this.appComponent.filter.selUntil);

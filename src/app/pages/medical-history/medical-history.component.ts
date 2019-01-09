@@ -15,15 +15,16 @@ export class MedicalHistoryComponent implements OnInit {
   					private appComponent: AppComponent) { }
 
 	ngOnInit() {
+		clearInterval(this.appComponent.interval);
 		localStorageModifications.cleanURL();
 		if (!localStorageModifications.getLogged()){
 			localStorageModifications.changeURL(PAGES.MEDICAL_HISTORY);
       		this.router.navigate([PAGES.LOGIN]);
 		}
-		else if (this.appComponent.needLoadArrays){
+		else //if (this.appComponent.needLoadArrays){
 			localStorageModifications.changeURL(PAGES.MEDICAL_HISTORY);
-			this.appComponent.loginWithOutMoveToLoginPage();
-		}
+			//this.appComponent.loginWithOutMoveToLoginPage();
+		//}
 	}
 
 	

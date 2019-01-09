@@ -1,3 +1,53 @@
-<iframe src="http://medisoftware.com.ar/mediweb/webpages/turnos/verTurnosMedico.php" 
-style="border:0px #ffffff none;" name="myiFrame" scrolling="yes" frameborder="0" 
-marginheight="0px" marginwidth="0px" height="1010px" width="100%" allowfullscreen></iframe>
+<!-- <iframe src="http://medisoftware.com.ar/mediweb/webpages/turnos/verTurnosMedico.php" style="border:0px #ffffff none;"name="myiFrame" scrolling="yes" frameborder="0" marginheight="0px" marginwidth="0px" height="1010px" width="100%" allowfullscreen></iframe>
+ -->
+
+<div *ngIf="doctorsReady()">
+	<div class="row head">
+		<!-- <div class="selectDoctor " >
+			<div class="input-group mb-3 input-custom" >
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon1" title="Seleccione médico">Médico</span>
+				</div>
+				<select title="Seleccione médico" class="form-control input-doctor-select">
+					<option></option>
+					<option *ngFor="let doc of doctors " [selected]="this.appComponent.filter.selDoctor === doc.nombre">{{ doc.nombre }}</option>
+				</select>
+			</div>
+
+		</div>
+
+		<div class="buttons padding" >
+			<button class="btn-custom" title="Buscar">Buscar</button>
+
+
+			<button class="btnIMG fake" title="Agregar sobreturno">
+				*
+			</button>
+		</div> -->
+	</div>
+
+	<div class="row calendarContainer">
+		<div class="calendarGrid">
+			
+		</div>
+
+		<div class="calendar">
+			
+			<ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next"></ngb-datepicker>
+		</div>
+	</div>
+
+	
+</div>
+
+
+
+
+	
+
+
+<div *ngIf="!doctorsReady()" >
+	<loading></loading>
+</div>
+
+

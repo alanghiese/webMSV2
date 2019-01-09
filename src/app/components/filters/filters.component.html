@@ -9,7 +9,7 @@
 	<!-- primera fila -->
 	<div class="input-group input-group-sm mb-3" >
 		<!-- Desde -->                                       
-		<div *ngIf="!appComponent.now" class="input-group mb-3" style="max-width: 240px; margin-right: 18px;">
+		<div *ngIf="!appComponent.now" class="input-group mb-3 input-since" >
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="basic-addon1" title="Extraer datos desde.." ><strong>Desde</strong></span>
 			</div>
@@ -17,14 +17,14 @@
 				name="dpSince" [(ngModel)]="modelSince" ngbDatepicker #d1="ngbDatepicker" (click)="d1.toggle()" (ngModelChange)="onChangeSince(modelSince.value)">
 		</div>
 
-
+ 
 		<!-- Medico -->
-		<div class="input-group mb-3" style="max-width: 250px;margin-right: 18px">
+		<div class="input-group mb-3 input-doctor" >
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="basic-addon1" title="Filtrar por médico"><strong>Medico</strong></span>
 			</div>
 				<select ng-model="selectedDoctor" #doctor (change)="onChangeDoctor(doctor.value)" title="Filtrar por médico"
-				class="form-control" style="max-width: 200px;" >
+				class="form-control input-doctor-select">
 					<option></option>
 					<option *ngFor="let doc of doctors " [selected]="this.appComponent.filter.selDoctor === doc.nombre">{{ doc.nombre }}</option>
 				</select>
@@ -32,19 +32,19 @@
 
 
 		<!-- Servicio -->
-		<div class="input-group mb-3" style="max-width: 250px;margin-right: 18px">
+		<div class="input-group mb-3 input-service" >
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="basic-addon1" title="Filtrar por servicio"><strong>Servicio</strong></span>
 			</div>
 			<select ng-model="selectedService" #service (change)="onChangeService(service.value)" title="Filtrar por servicio"
-			class="form-control" style="max-width: 200px;"  >
+			class="form-control input-service-select">
 				<option ></option>
 				<option *ngFor="let ser of services " [selected]="this.appComponent.filter.selService === ser"> {{ ser }} </option>
 			</select>
 		</div>
 
 		<!-- Buscar por apellido -->                                       
-		<div class="input-group mb-3" style="max-width: 250px;margin-right: 18px">
+		<div class="input-group mb-3 input-foundsurname" >
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="basic-addon1" title="Buscar por apellido"><strong>Buscar</strong></span>
 			</div>
@@ -56,10 +56,10 @@
 	</div> <!-- fin de la primera fila -->
 
 	<!-- Segunda fila -->
-	<div class="input-group input-group-sm " style="margin-top: -30px" >
+	<div class="input-group input-group-sm second-row"  >
 
 		<!-- Hasta -->                                       
-		<div *ngIf="!appComponent.now" class="input-group mb-3" style="max-width: 240px; margin-right: 18px;">
+		<div *ngIf="!appComponent.now" class="input-group mb-3 input-until" >
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="basic-addon1" title="Extraer datos hasta.."><strong>Hasta</strong></span>
 			</div>
@@ -70,12 +70,12 @@
 
 
 		<!-- Cobertura medica -->                                       
-		<div class="input-group mb-3" style="max-width: 250px;margin-right: 18px">
+		<div class="input-group mb-3 input-coverage" >
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="basic-addon1" title="Filtrar por cobertura"><strong>Cobertura</strong></span>
 			</div>
 			<select  ng-model="selectedCoverage" #coverage (change)="onChangeCoverage(coverage.value)" title="Filtrar por cobertura"
-			class="form-control" style="max-width: 200px;">
+			class="form-control input-coverage-select">
 				<option></option>
 				<option [selected]="appComponent.filter.selCoverage === 'Sin Cobertura'">Sin Cobertura</option>
 				<option *ngFor="let cov of coverages " [selected]="this.appComponent.filter.selCoverage === cov"> {{ cov }} </option>
@@ -83,12 +83,12 @@
 		</div>
 
 		<!-- Estado -->                                        
-		<div *ngIf="showState()" class="input-group mb-3" style="max-width: 250px;margin-right: 18px">
+		<div *ngIf="showState()" class="input-group mb-3 input-state" >
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="basic-addon1" title="Filtrar por estado del turno"><strong>Estado</strong></span>
 			</div>
 			<select  ng-model="selectedPractice" #practice (change)="onChangeState(practice.value)"  title="Filtrar por estado del turno"
-			class="form-control" style="max-width: 200px;">
+			class="form-control input-state-select" >
 				<option [selected]="this.appComponent.filter.selState === 'TODOS'">Todos</option>
 				<option [selected]="this.appComponent.filter.selState === 'A'">Atendidos</option>
 				<option [selected]="this.appComponent.filter.selState === ''">Ausentes</option>
@@ -100,7 +100,7 @@
 		</div>
 		
 		<!-- Excluir por apellido -->                                      
-		<div class="input-group mb-3" style="max-width: 250px;margin-right: 18px">
+		<div class="input-group mb-3 input-excludesurname" >
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="basic-addon1" title="Excluir por apellido"><strong>Excluir</strong></span>
 			</div>
@@ -113,7 +113,7 @@
 	
 </div> <!-- del primer div -->
 
-<span *ngIf = "!validDate()" style="color: red">
+<span *ngIf = "!validDate()" class="invalid-date">
 	Cuidado: fechas invalidas.	
 </span>
 <hr>

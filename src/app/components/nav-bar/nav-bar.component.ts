@@ -61,6 +61,7 @@ export class NavBarComponent implements OnInit {
 	    localStorageModifications.changeLogged(BOOLEAN_VAL.FALSE);
 	    localStorageModifications.changeLoading(BOOLEAN_VAL.FALSE);
 	    localStorageModifications.changeRelog(BOOLEAN_VAL.FALSE);
+      localStorageModifications.changeURL(this._router.url);
 	  	
   	}
 
@@ -79,7 +80,7 @@ export class NavBarComponent implements OnInit {
   changeClient(value)
     {
       let c: string = value;
-      console.log("El cliente nuevo sera: " + c);
+      //console.log("El cliente nuevo sera: " + c);
       let r;
       //prueba cargar ese cliente
       this._dbPetitions.connectToClient(c).subscribe(
@@ -101,6 +102,7 @@ export class NavBarComponent implements OnInit {
               // si hizo el cambio le seteo todos los arreglos al appcomponent
               //console.log(r);
               this.user = c;
+              // this._appComponent.needLoadArrays = true;
 
               let doctors: any[];
               let services: any[];
@@ -132,9 +134,9 @@ export class NavBarComponent implements OnInit {
                         );
 
               //redirijo a my turns por defecto
-              this._router.navigate([PAGES.MY_TURNS]);
-              //muestro el user actual 
-              document.getElementById('usr').innerHTML = 'Conectado a <strong>' + this.user + '</strong>';
+              this._router.navigate([localStorageModifications.getURL()]);
+              //muestro el user actual
+              document.getElementById('usr').innerHTML = this.user ;
               // localStorage.setItem('reload','true');
             }
             localStorageModifications.changeLoading(BOOLEAN_VAL.FALSE);

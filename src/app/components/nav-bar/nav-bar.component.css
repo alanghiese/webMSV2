@@ -1,30 +1,75 @@
 .bg-orange{
     background-color: rgb(255,192,128);
-    box-shadow: 0px 1px 5px;
+    /*box-shadow: 0px 1px 5px;*/
 }
 
 a:hover{
 	text-decoration: none;
 }
 
-.dropdownButton{
-	background-color: rgb(255, 179, 102); 
-	border: 0px; 
-	color: black; 
-	cursor: pointer; 
-	text-align: center;
+.marca-ms {
+    display: inline-block;
+    text-align: left;
+    cursor: pointer;
 }
 
-
-.dropdownContainer{
-	background-color: rgb(255, 179, 102); 
-	cursor: pointer;
-	width: 100%
-}
-
-.userConnected{
-	background-color: rgb(255, 179, 102); 
+.categories{
+	background-color: transparent; 
 	border: 0px; 
 	color: black;
 	cursor: pointer !important;
+  	margin-bottom: 1px solid black !important;
+  	text-align: center;
+}
+
+.categories:hover{
+	color: rgb(247, 130, 0);
+}
+
+.navbar-title{
+	font-size: 25px !important; 
+	color: black !important; 
+	cursor: default !important;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  /*min-width: 200px;*/
+  text-align: center;
+}
+
+.dropdown-content {
+  right: 0;
+  display: none;
+  position: absolute;
+  background-color: rgb(255,192,128);
+  min-width: 200px;
+  /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+  padding: 12px 16px;
+  z-index: 1;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+}
+
+.dropdown:hover .dropdown-content {
+
+  display: block;
+}
+
+.exit{
+	background-color: rgb(255,192,128); 
+	border: 0px; 
+	color: black;
+	cursor: pointer !important;
+  	margin-bottom: 1px solid black !important;
+  	text-align: center;
+	min-width: 100%;
+	background-color: rgb(255, 179, 102) !important;
+	border-radius: 5px;
+}
+
+.contactIMG{
+  background-image: url("/MediwareHub/webMS/assets/contact.gif");
 }

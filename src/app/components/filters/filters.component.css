@@ -1,0 +1,63 @@
+.input-since{
+	max-width: 240px; 
+	margin-right: 18px;
+}
+
+.input-doctor{
+	max-width: 250px;
+	margin-right: 18px;
+}
+ 
+.input-doctor-select{
+	max-width: 200px !important;
+}
+
+.input-service{
+	max-width: 250px;
+	margin-right: 18px;
+}
+
+.input-service-select{
+	max-width: 200px !important;
+}
+
+.input-foundsurname{
+	max-width: 250px;
+	margin-right: 18px;
+}
+
+.second-row{
+	margin-top: -30px !important;
+}
+
+.input-until{
+	max-width: 240px !important; 
+	margin-right: 18px !important;
+}
+
+.input-coverage{
+	max-width: 250px;
+	margin-right: 18px;
+}
+
+.input-coverage-select{
+	max-width: 200px;
+}
+
+.input-state{
+	max-width: 250px !important;
+	margin-right: 18px !important;
+}
+
+.input-state-select{
+	max-width: 200px !important; 
+}
+
+.input-excludesurname{
+	max-width: 250px !important;
+	margin-right: 18px !important;
+}
+
+.invalid-date{
+	color: red;
+}
