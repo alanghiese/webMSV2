@@ -18,6 +18,7 @@ import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, Cal
 
 
 const now = new Date();
+const defaultMonth: number = -999;
 
 @Component({
 	selector: 'my-turns',
@@ -35,10 +36,11 @@ export class MyTurnsComponent implements OnInit {
 	* como por defecto no hay turno es true inicialmente
 	*/
 	theOtherValue: boolean = true;
-	//-999 es un valor por defecto para que la primera vez cargue si o si
-	currentMonth: number = -999; 
+	//defaultMonth es un valor por defecto para que la primera vez cargue si o si
+	currentMonth: number = defaultMonth; 
 	lowerRange: number = -1;
 	higherRange: 1;
+
 
 	
 
@@ -370,14 +372,14 @@ addEvent(): void {
 
 updateTurns(month:number){
   	// solo hago este seteo cuando el mes ya fue iniciado
-  	if ( this.currentMonth != -999 )
+  	if ( this.currentMonth != defaultMonth )
   		this.currentMonth = this.currentMonth + month;
   	/*
   	 * si es la primera vez o
   	 * si el mes al que trato de acceder esta fuera del mes actual +- 1 
   	 * y hay doctor seleccionado recargo los turnos
   	 */
-  	if ( this.currentMonth == -999 ){ //esto es para el caso de la primera vez
+  	if ( this.currentMonth == defaultMonth ){ //esto es para el caso de la primera vez
   		//seteo el mes actual
   		this.currentMonth = now.getMonth()+month;
   		//obtengo los turnos solo si hay un medico seteado
