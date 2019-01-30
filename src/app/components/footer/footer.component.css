@@ -1,0 +1,30 @@
+a:link {
+    color: white;
+    background-color: transparent;
+    text-decoration: none;
+	outline: 0 !important;
+}
+
+a:visited {
+    color: white;
+    background-color: transparent;
+    text-decoration: none;
+    outline-style: none !important;
+	border: none !important;
+	cursor: pointer;
+	outline: 0 !important;
+
+}
+
+a:active{
+	outline: 0 !important;
+}
+
+a:hover {
+    background-color: transparent;	
+    outline: 0 !important;
+}
+
+h6{
+	line-height: 
+}

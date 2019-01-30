@@ -6,6 +6,19 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChartsModule } from 'ng2-charts';
 import { FormsModule } from '@angular/forms';
 
+//para los calendarios
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarHeaderComponent } from './demo-utils/calendar-header.component';
+import 'flatpickr/dist/flatpickr.css';
+import { FlatpickrModule } from 'angularx-flatpickr';
+
+import localeAr from '@angular/common/locales/es-AR';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeAr);
+
+
 //servicios
 import { AppRoutingModule } from './app-routing.module';
 import { ExcelService } from './providers/excel.service';
@@ -13,6 +26,12 @@ import { EncoderDecoderService } from './providers/encoder-decoder.service';
 import { DbPetitionsService } from './providers/db-petitions.service';
 import { dbPetitionsInterceptor } from './providers/db-petitions-interceptor';
 import { SessionProvider } from './providers/session.provider';
+
+
+
+import { CommonModule } from '@angular/common';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 //pipes
@@ -37,6 +56,7 @@ import { RealTimeComponent } from './pages/real-time/real-time.component';
 import { LoginComponent } from './pages/login/login.component';
 import { routing, appRoutingProviders } from './app-routing.module';
 import { FooterComponent } from './components/footer/footer.component';
+import { CalendarComponent } from './components/calendar/calendar.component'
 
 @NgModule({
   declarations: [
@@ -57,7 +77,10 @@ import { FooterComponent } from './components/footer/footer.component';
     TurnsComponent,
     RealTimeComponent,
     LoginComponent,
-    FooterComponent
+    FooterComponent,
+    //para calendario
+    CalendarHeaderComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +89,15 @@ import { FooterComponent } from './components/footer/footer.component';
     ChartsModule,
     HttpClientModule,
     routing,
-    AppRoutingModule
+    AppRoutingModule,
+    //para los calendarios
+    BrowserAnimationsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
+    FlatpickrModule.forRoot()
+    //fin de para los calendarios
   ],
   providers: [
 	AppRoutingModule,
@@ -79,3 +110,4 @@ import { FooterComponent } from './components/footer/footer.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

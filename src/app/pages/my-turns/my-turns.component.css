@@ -1,27 +1,31 @@
-/*.btnadd{
-	background-color: blue;
-	border: none;
-	border-radius: 35px;
-	max-width: 35px !important;
-	max-height: 35px !important;
-	width:35px !important;
-	height: 35px !important;
-	background-image: url("/assets/addbutton.png");
+@import url('//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
-	background-position: center; 
-	background-repeat: no-repeat; 
-	background-size: cover; 
-}*/
-
-
-
-.btnadd:hover {
-    transform: scale(1.055);
+/*para cartel de warning*/
+.isa_warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
 }
 
-.btnadd:active {
-    transform: scale(0.90);
+.isa_warning{
+	margin: 10px 0px;
+	padding:12px;
+ 
 }
+
+.isa_warning i{
+    margin:10px 22px;
+    font-size:2em;
+    vertical-align:middle;
+}
+
+/*fin de para cartel de waring*/
+
+
+body{
+	background-color: white !important;
+}
+
+
 
 .input-custom{
 	max-width: 350px;
@@ -32,6 +36,7 @@
 	padding: 10px;
 }
 
+
 .btn-custom	{
 	padding: 7px;
 	border-radius: 5px;
@@ -39,11 +44,9 @@
 	border: 0px !important;
 	color: #F37A21;
 	font-weight: bold;
-	/*padding: 15px 32px;*/
 	text-align: center;
 	text-decoration: none;
-	/*display: inline-block;*/
-	/*font-size: 16px;*/
+	cursor: pointer;
 }
 
 .btn-custom:hover{
@@ -65,26 +68,6 @@
 	border: 0px !important;
 }
 
-
-.calendar{
-	text-align: right;
-	display: inline-block;
-	width: 40%;
-}
-
-.calendarGrid{
-	width: 60%;
-}
-
-.calendarContainer{
-	width: 100%;
-    position: absolute;
-}
-
-/*body,html,div{
-	background-color: #ffc68e ;
-}*/
-
 .head{
 	width: 100%;
 	padding: 15px;	
@@ -97,4 +80,40 @@
 
 .buttons{
 	width: 72vw;
+}
+
+
+/*para el header*/
+.myButton{
+	padding: 5px;
+	background-color: #FFC080; 
+	border: 0px !important;
+	color: #F37A21;
+	text-align: center;
+	text-decoration: none;
+}
+
+.buttonLeft{
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.buttonRight{
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.buttonMiddle{
+	border-radius: 0px;
+}
+
+.myButton:active, .myButton:hover, .myButton:focus, .active{
+	background-color: #ff6932;
+	border-color: #ff6932;	
+	color: white;	
+	font-weight: bold;
+}
+
+.myButton:hover{
+	transform: scale(1.05);
 }

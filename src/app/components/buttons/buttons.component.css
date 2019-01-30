@@ -5,16 +5,16 @@
 }
 
 .graphsIMG{
-    background-image: url("/assets/btnGraph.png");
+    background-image: url("/../assets/btnGraph.png");
 }
 .showturnsIMG{
-    background-image: url("/assets/btnTurn.png");
+    background-image: url("/../assets/btnTurn.png");
 }
 .realtimeIMG{
-    background-image: url("/assets/btnNow.png");
+    background-image: url("/../assets/btnNow.png");
 }
 .clearIMG{
-    background-image: url("/assets/close.png");
+    background-image: url("/../assets/close.png");
 }
 
 

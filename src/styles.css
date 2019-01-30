@@ -1,3 +1,9 @@
+/*
+* Importo los estilos para los calendarios
+*/
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+
+
 footer {
   position: fixed;
   bottom: 0%;
@@ -48,7 +54,7 @@ img{
   * este background-image es un valor por defecto, solo sirve para 1 caso
   * en los demas casos que se usa esta clase hay que redefinir este atributo
   */
-  background-image: url("/assets/addbutton.png");
+  background-image: url("/../assets/addbutton.png");
   width: 36px;
   height: 36px;
   /*overflow: hidden;*/

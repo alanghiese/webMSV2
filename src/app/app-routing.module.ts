@@ -14,6 +14,8 @@ import { MedicalHistoryComponent } from './pages/medical-history/medical-history
 import { MyTurnsComponent } from './pages/my-turns/my-turns.component';
 import { LoadingComponent } from './pages/loading/loading.component';
 
+import { CalendarComponent } from './components/calendar/calendar.component'
+
 
 
 const appRoutes: Routes = [
@@ -26,6 +28,7 @@ const appRoutes: Routes = [
 	{path: 'contact', component: ContactComponent},
 	{path: 'medical_history', component: MedicalHistoryComponent},
 	{path: 'my_turns', component: MyTurnsComponent},
+	{path: 'dev', component: CalendarComponent},
 	{path: '**', component: Error404Component}
 ];
 

@@ -1,0 +1,52 @@
+/*.btn{
+  background-color: coral;
+  border-color: coral;
+}
+
+.btn:hover{
+	background-color: #ff6932;
+	border-color: #ff6932;
+}
+
+.btn:focus{
+	background-color: #ff6932
+}
+
+.btn-primary:active, .btn:active{
+	background-color: #ff6932;
+	border-color: #ff6932;	
+}
+*/
+.myButton{
+	padding: 5px;
+	background-color: #FFC080; 
+	border: 0px !important;
+	color: #F37A21;
+	text-align: center;
+	text-decoration: none;
+}
+
+.buttonLeft{
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+
+.buttonRight{
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+.buttonMiddle{
+	border-radius: 0px;
+}
+
+.myButton:active, .myButton:hover, .myButton:focus, .active{
+	background-color: #ff6932;
+	border-color: #ff6932;	
+	color: white;	
+	font-weight: bold;
+}
+
+.myButton:hover{
+	transform: scale(1.05);
+}

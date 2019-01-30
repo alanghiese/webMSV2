@@ -7,6 +7,9 @@ import { serviceObject, coverageObject, UserCredentials } from './interfaces';
 import { DbPetitionsService } from './providers/db-petitions.service';
 import { EncoderDecoderService } from './providers/encoder-decoder.service';
 import { Observable } from 'rxjs';
+import { Subject } from "rxjs";
+
+import { CalendarEvent } from 'angular-calendar';
 
 @Component({
   selector: 'app-root',
@@ -41,11 +44,21 @@ export class AppComponent {
 	//esta boolean sirve para no reloguear cada vez que cambia de componente para recargar los arreglos
 	needLoadArrays: boolean = true;
 
+	//eventos para el calendario
+	// events: CalendarEvent<any>[] = [];
+	// public configObservable = new Subject<CalendarEvent[]>();
+	
+
+
+	// emitConfig(val) {
+	// this.configObservable.next(val);
+	// }
+
 	constructor(
 				private router: Router,
 				private _DbPetitionsService: DbPetitionsService,
 				private _EncoderDecoderService: EncoderDecoderService) {
-		
+
 		
 	    /*console.log(localStorageModifications.getURL())
 	    if (localStorageModifications.getURL()!=null)

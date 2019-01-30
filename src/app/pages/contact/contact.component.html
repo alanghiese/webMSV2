@@ -1,17 +1,111 @@
-<div class="maindiv">
-	<h5>
-	  Celular:
-	</h5>
 
-	<h5>
-	  Email:
-	</h5>
 
-	<h5>
-	  Web oficial: <a href="http://medisoftware.com.ar/">
-	  					<a style="color: #5F9EA0"><strong>Medi</strong></a>
-	  					<a style="color: coral"><strong>Software</strong></a>
-	  				</a>
-	</h5>
+<div class="row  form-card">
+	<div class="col my-form">
+		<div class="isa_warning" style="width: 100%; padding: 0px">
+		     <i class="fa fa-warning" ></i>
+		     Para enviar emails necesito un servicio especifico desde el backend
+		</div>
+		<form (ngSubmit)="processForm()" id="contact" #contact = "ngForm" role="form">
 
+			<!-- nombre y apellido -->
+			<div class="text" title="Requerido">
+				<span>Nombre y apellido</span><span class="asterisk">*</span>
+			</div>
+			<br>
+			<input 
+				type="text" 
+				name="name" 
+				class="input" 
+				placeholder="Ingrese nombre" 
+				[(ngModel)]="name"
+				required
+				minlength="3"
+				autocomplete="off"
+				#nameInput="ngModel">
+			<div class="isa_error" *ngIf="nameInput.invalid && nameInput.dirty">
+				<i class="fa fa-times-circle"></i>
+				Minimo de letras en el nombre: 3
+			</div>
+
+			<!-- email -->
+			<div class="text" title="Requerido">
+				<span>Email</span><span class="asterisk">*</span>
+			</div>
+			<br>
+			<input 
+	            type="email" 
+	            name="email" 
+	            class="input" 
+	            placeholder="Ingrese su email" 
+	            [(ngModel)]="email"
+	            required
+	            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+				autocomplete="off"
+	            #emailInput="ngModel">
+			<div class="isa_error" *ngIf="emailInput.invalid && emailInput.dirty">
+				<i class="fa fa-times-circle"></i>
+				Ingrese un email valido.
+			</div>
+
+			<!-- mensaje -->
+			<div class="text" title="Requerido">
+				<span>Mensaje</span><span class="asterisk">*</span>
+			</div>
+			<br>
+			<textarea 
+	            name="message" 
+	            placeholder="Ingrese el mensaje" 
+	            [(ngModel)]="message"
+	            required
+	            rows="3"
+	            cols="50"
+				autocomplete="off"
+	            #messageInput="ngModel">
+	        </textarea>
+	        <div class="isa_error" *ngIf="messageInput.invalid  && messageInput.dirty">
+	        	<i class="fa fa-times-circle"></i>
+	        	Mensaje requerido
+	        </div>
+	        <br>
+
+	        <!-- enviar una copia -->
+	        <div>
+	        	<label>
+	        		<input 
+
+	        			type="checkbox" 
+			            name="chkSendMe" 
+			            class="my-checkbox" 
+			            [(ngModel)]="chkSendMe"
+			            #chkSendMeInput="ngModel"
+			            >
+	        		<span title="Enviarme una copia al email ingresado"> Enviarme una copia </span>
+	        	</label>
+	        	<br>
+	        </div>
+
+	        <!-- boton enviar -->
+	        <button 
+	        	type="submit" class="button is-danger is-large" 
+	        	[disabled]="!contact.form.valid">
+	        	<i class="fas fa-angle-double-right"></i>
+	        	Enviar
+	        </button>
+		</form>
+	</div>
+	<div class="col letter">
+		<img src="./assets/letter.png" height="196" width="212">
+		<h4>Para contactarte con nosotros por favor completa el formulario de la izquierda.</h4>
+		<h3>
+  			<a href="http://medisoftware.com.ar/" target="_blank">
+			<a style="color: #5F9EA0"><strong>Medi</strong></a>
+			<a style="color: coral"><strong>Software</strong></a>
+			</a>
+		</h3>
+	</div>
 </div>
+
+
+	
+	

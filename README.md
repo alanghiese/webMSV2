@@ -28,6 +28,8 @@ Run `npm install xlsx --save`
 Run `npm install --save angular-calendar date-fns`
 Reference to GitHub: `https://github.com/mattlewis92/angular-calendar#getting-started`
 
+##install flatpickr
+Run `npm install --save flatpickr angularx-flatpickr`
 
 ## Development server
 

@@ -16,4 +16,16 @@ export class ContactComponent implements OnInit {
 		clearInterval(this.appComponent.interval);
 	}
 
+	name: string;
+	email: string;
+	message: string;
+	chkSendMe = false;
+
+	processForm() {
+    const allInfo = `My name is ${this.name}. My email is ${this.email}. My message is ${this.message} and checked is: ` + this.chkSendMe;
+    alert(allInfo); 
+  }
+
+
+  
 }

@@ -1,14 +1,18 @@
-<!-- <iframe src="http://medisoftware.com.ar/mediweb/webpages/turnos/verTurnosMedico.php" style="border:0px #ffffff none;"name="myiFrame" scrolling="yes" frameborder="0" marginheight="0px" marginwidth="0px" height="1010px" width="100%" allowfullscreen></iframe>
- -->
+
 
 <div *ngIf="doctorsReady()">
+	<div class="isa_warning">
+	     <i class="fa fa-warning"></i>
+	     Esta seccion se encuentra en desarrollo
+	</div>
+
 	<div class="row head">
-		<div class="selectDoctor " >
-			<div class="input-group mb-3 input-custom" >
+		<div class="selectDoctor ">
+			<div class="input-group input-custom" >
 				<div class="input-group-prepend">
 					<span class="input-group-text" id="basic-addon1" title="Seleccione médico">Médico</span>
 				</div>
-				<select title="Seleccione médico" class="form-control input-doctor-select">
+				<select title="Seleccione médico" class="form-control input-doctor-select" [(ngModel)]="this.currentDoctor">
 					<option></option>
 					<option *ngFor="let doc of doctors " [selected]="this.appComponent.filter.selDoctor === doc.nombre">{{ doc.nombre }}</option>
 				</select>
@@ -17,7 +21,7 @@
 		</div>
 
 		<div class="buttons padding" >
-			<button class="btn-custom" title="Buscar">Buscar</button>
+			<button class="btn-custom" title="Buscar" (click)="getTurns()">Buscar</button>
 
 
 			<button class="btnIMG fake" title="Agregar sobreturno">
@@ -26,25 +30,220 @@
 		</div>
 	</div>
 
-	<div class="row calendarContainer">
-		<div class="calendarGrid">
-			
-		</div>
+	
+	<!-- calendario -->
 
-		<div class="calendar">
-			
-			<ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next"></ngb-datepicker>
-		</div>
+
+	<div class="container">
+	  <!-- <mwl-demo-utils-calendar-header
+	  [(view)]="view"
+	  [(viewDate)]="viewDate"
+	  [locale]="locale">
+	</mwl-demo-utils-calendar-header> -->
+
+	<!-- Calendar header -->
+
+
+	<div class="row text-center">
+      <div class="col-md-4">
+        <div class="btn-group">
+          <div
+            class="myButton buttonLeft"
+            mwlCalendarPreviousView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (click)="updateTurns(-1)"
+          >
+            Anterior
+          </div>
+          <div
+            class="myButton buttonMiddle"
+            mwlCalendarToday
+            [(viewDate)]="viewDate"
+            (click)="updateTurns(0)"
+          >
+            Hoy
+          </div>
+          <div
+            class="myButton buttonRight"
+            mwlCalendarNextView
+            [view]="view"
+            [(viewDate)]="viewDate"
+            (click)="updateTurns(1)"
+          >
+            Siguiente
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <h3>{{ viewDate | calendarDate: view + 'ViewTitle':locale }}</h3>
+      </div>
+      <div class="col-md-4">
+        <div class="btn-group">
+          <div
+            class="myButton buttonLeft"
+            (click)="viewChange.emit('month')"
+            [class.active]="view === 'month'"
+          >
+            Mes
+          </div>
+          <div
+            class="myButton buttonMiddle"
+            (click)="viewChange.emit('week')"
+            [class.active]="view === 'week'"
+          >
+            Semana
+          </div>
+          <div
+            class="myButton buttonRight"
+            (click)="viewChange.emit('day')"
+            [class.active]="view === 'day'"
+          >
+            Dia
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+
+
+	<!-- calendar body -->
+
+
+	  <ng-template #modalContent let-close="close">
+	    <div class="modal-header">
+	      <h5 class="modal-title">Event action occurred</h5>
+	      <button type="button" class="close" (click)="close()">
+	        <span aria-hidden="true">&times;</span>
+	      </button>
+	    </div>
+	    <div class="modal-body">
+	      <div>
+	        Action:
+	        <pre>{{ modalData?.action }}</pre>
+	      </div>
+	      <div>
+	        Event:
+	        <pre>{{ modalData?.event | json }}</pre>
+	      </div>
+	    </div>
+	    <div class="modal-footer">
+	      <button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
+	    </div>
+	  </ng-template>
+
+	  <div class="calendar" [ngSwitch]="view">
+	    <mwl-calendar-month-view
+	      *ngSwitchCase="CalendarView.Month"
+	      [viewDate]="viewDate"
+	      [events]="events"
+	      [refresh]="refresh"
+	      [activeDayIsOpen]="activeDayIsOpen"
+	      (dayClicked)="dayClicked($event.day)"
+	      (eventClicked)="handleEvent('Clicked', $event.event)"
+	      (eventTimesChanged)="eventTimesChanged($event)"
+	      [locale]="locale">
+	    </mwl-calendar-month-view>
+	    <mwl-calendar-week-view
+	      *ngSwitchCase="CalendarView.Week"
+	      [viewDate]="viewDate"
+	      [events]="events"
+	      [refresh]="refresh"
+	      (eventClicked)="handleEvent('Clicked', $event.event)"
+	      (eventTimesChanged)="eventTimesChanged($event)"
+	      [locale]="locale">
+	    </mwl-calendar-week-view>
+	    <mwl-calendar-day-view
+	      *ngSwitchCase="CalendarView.Day"
+	      [viewDate]="viewDate"
+	      [events]="events"
+	      [refresh]="refresh"
+	      (eventClicked)="handleEvent('Clicked', $event.event)"
+	      (eventTimesChanged)="eventTimesChanged($event)"
+	      [locale]="locale">
+	    </mwl-calendar-day-view>
+	  </div>
+
+	  <br><br><br>
+
+	  <h3>
+	    Edit events
+	    <button
+	      class="btn btn-primary pull-right"
+	      (click)="addEvent()">
+	      Add new
+	    </button>
+	    <div class="clearfix"></div>
+	  </h3>
+
+	  <table class="table table-bordered">
+
+	    <thead>
+	      <tr>
+	        <th>Title</th>
+	        <th>Primary color</th>
+	        <th>Secondary color</th>
+	        <th>Starts at</th>
+	        <th>Ends at</th>
+	        <th>Remove</th>
+	      </tr>
+	    </thead>
+
+	    <tbody>
+	      <tr *ngFor="let event of events; let index = index">
+	        <td>
+	          <input
+	            type="text"
+	            class="form-control"
+	            [(ngModel)]="event.title"
+	            (keyup)="refresh.next()">
+	        </td>
+	        <td>
+	          <input
+	            type="color"
+	            [(ngModel)]="event.color.primary"
+	            (change)="refresh.next()">
+	        </td>
+	        <td>
+	          <input
+	            type="color"
+	            [(ngModel)]="event.color.secondary"
+	            (change)="refresh.next()">
+	        </td>
+	        <td>
+	          <input
+	            class="form-control"
+	            type="text"
+	            [(ngModel)]="event.start"
+	            (ngModelChange)="refresh.next()"
+	            placeholder="Not set">
+	        </td>
+	        <td>
+	          <input
+	            class="form-control"
+	            type="text"
+	            [(ngModel)]="event.end"
+	            (ngModelChange)="refresh.next()"
+	            placeholder="Not set">
+	        </td>
+	        <td>
+	          <button
+	            class="btn btn-danger"
+	            (click)="events.splice(index, 1); refresh.next()">
+	            Delete
+	          </button>
+	        </td>
+	      </tr>
+	    </tbody>
+
+	  </table>
 	</div>
 
+
+
 	
+
 </div>
-
-
-
-
-	
-
 
 <div *ngIf="!doctorsReady()" >
 	<loading></loading>

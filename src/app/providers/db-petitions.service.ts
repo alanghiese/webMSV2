@@ -107,13 +107,13 @@ export class DbPetitionsService {
 	}
 
 	//saco los turnos para un doctor, actualmente me devuelve todos los turnos para todos los doctores
-	getTurnsDoctors(fechaDesde: Date, fechaHasta: Date) : Observable<any> {
+	getTurnsDoctors(id:any, doctorName: string, fechaDesde: Date, fechaHasta: Date) : Observable<any> {
 	    //momentoDelDia (maniana|tarde|todo)
 	    //la idea seria usar todos los parametros pero actualmente no hacen nada
 	    let params = new HttpParams()
 	    .set(PARAMETERS.ACTION, ACTIONS.GET_JSON_TURNS)
-	    .set(PARAMETERS.DOCTOR_NAME, COMMON_WORDS.EMPTY_CHAR)
-	    .set(PARAMETERS.DOCTOR_ID, COMMON_WORDS.EMPTY_CHAR)
+	    .set(PARAMETERS.DOCTOR_NAME, doctorName)
+	    .set(PARAMETERS.DOCTOR_ID, id)
 	    .set(PARAMETERS.DATE_FROM,this._formatDate(fechaDesde))
 	    .set(PARAMETERS.DATE_TO,this._formatDate(fechaHasta))
 	    .set(PARAMETERS.DAY_MOMENT,COMMON_WORDS.ALL); //de momento queda en todo
@@ -123,7 +123,7 @@ export class DbPetitionsService {
 	      .pipe(
 	        map(resp => {
 	          console.log(`get turn doctors ${params}`);
-	          return resp;
+	          return resp.data;
 	        }),
 	        //tap(ap => console.log(`get Doctors ${params}`)),
 	        catchError(this.handleAndThrow(`get turn doctors ${params}`))
