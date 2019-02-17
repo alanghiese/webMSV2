@@ -1,4 +1,4 @@
-//aca van las constantes de la aplicacion
+//aca van las constantes de la aplicacion 
 
 //para excel.service
 export const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
@@ -26,11 +26,22 @@ export const PARAMETERS = {
 }
 
 
+
+export const EMAIL_PARAMETERS = {
+	SENDER_EMAIL: "direccionRte",
+	SENDER_NAME: "nombreRte",
+	DESTINATION_EMAIL: "direccionDst",
+	DESTINATION_NAME: "nombreDst",
+	MSG:"mensaje"
+}
+
+
 export const ACTIONS = {
 	GET_STATISTICS: "getEstadisticas",
 	GET_JSON_DOCTORS: "getJSONMedicos",
 	GET_JSON_TURNS: "getJSONTurnos",
-	GET_JSON_SERVICES: "getJSONServicios"
+	GET_JSON_SERVICES: "getJSONServicios",
+	ENVIAR_MENSAJE_CONTACTO: "enviarMensajeContacto"
 }
 
 //para dbPetitions
@@ -43,6 +54,7 @@ export const API_ENDPOINTS = {
 	getTurnsDoctors: 'mediwareHub.php',
 	getStatistics: 'mediwareHub.php',
 	getMedicalHistory: 'mediwarehub.php',
+	sendEmail: 'mediwarehub.php',
 	searchPatient: 'mediwarehub.php',
 	addMedicalHistoryEntry: 'mediwarehub.php'
 };
@@ -57,7 +69,8 @@ export const COMMON_WORDS = {
 	NEED_LOGIN: 'logearse',
 	ANYBODY: "Nadie",
 	NO_COVERAGE: "SIN COBERTURA",
-	NULL: "NULL"
+	NULL: "NULL",
+	RECORDED: "grabado"
 }
 
 //constantes para el routing
@@ -107,6 +120,10 @@ export const ERRORS = {
 	BEST_EXPERIENCIE: "Para una mejor experiencia, utilizar el celular de forma horizontal"
 }
 
+export const MESSAGES = {
+	MESSAGE_SENT: "Mensaje enviado. Gracias por comunicarse con nosotros."
+}
+
 export const BOOLEAN_VAL = {
 	TRUE: "true",
 	FALSE: "false"
@@ -132,4 +149,9 @@ export const VALUES_GROUP_BY = {
 	COV: "Cobertura",
 	SER: "Servicio",
 	DOC: "Medico"
+};
+
+export const DESTINATION_DATA = {
+			EMAIL:" alan.hiese@gmail.com",
+			NAME: "Alan Hiese"
 };

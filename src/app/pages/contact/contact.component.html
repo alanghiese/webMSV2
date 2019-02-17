@@ -2,10 +2,6 @@
 
 <div class="row  form-card">
 	<div class="col my-form">
-		<div class="isa_warning" style="width: 100%; padding: 0px">
-		     <i class="fa fa-warning" ></i>
-		     Para enviar emails necesito un servicio especifico desde el backend
-		</div>
 		<form (ngSubmit)="processForm()" id="contact" #contact = "ngForm" role="form">
 
 			<!-- nombre y apellido -->
@@ -14,6 +10,7 @@
 			</div>
 			<br>
 			<input 
+				id="name"
 				type="text" 
 				name="name" 
 				class="input" 
@@ -34,6 +31,7 @@
 			</div>
 			<br>
 			<input 
+				id="email"
 	            type="email" 
 	            name="email" 
 	            class="input" 
@@ -54,12 +52,14 @@
 			</div>
 			<br>
 			<textarea 
+				id="message"
 	            name="message" 
 	            placeholder="Ingrese el mensaje" 
 	            [(ngModel)]="message"
 	            required
 	            rows="3"
 	            cols="50"
+	            maxlength="200" 
 				autocomplete="off"
 	            #messageInput="ngModel">
 	        </textarea>
@@ -73,7 +73,7 @@
 	        <div>
 	        	<label>
 	        		<input 
-
+	        			id="chkSendMe"
 	        			type="checkbox" 
 			            name="chkSendMe" 
 			            class="my-checkbox" 
@@ -81,6 +81,8 @@
 			            #chkSendMeInput="ngModel"
 			            >
 	        		<span title="Enviarme una copia al email ingresado"> Enviarme una copia </span>
+	        		<!-- para que el checked se desmarque dependiendo la variable
+			            [checked] = "this.chkSendMe" -->
 	        	</label>
 	        	<br>
 	        </div>

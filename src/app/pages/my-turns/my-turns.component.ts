@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponent } from '../../app.component';
 import { PAGES } from '../../constants';
+import { TurnInfo } from '../../interfaces';
 import { localStorageModifications } from '../../models/localStorageFx';
 import { DbPetitionsService } from '../../providers/db-petitions.service';
+import { DatePipe } from '@angular/common';
+
 
 
 //CALENDARIO
@@ -18,7 +21,6 @@ import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, Cal
 
 
 const now = new Date();
-const defaultMonth: number = -999;
 
 @Component({
 	selector: 'my-turns',
@@ -31,15 +33,18 @@ export class MyTurnsComponent implements OnInit {
 	public doctors:any = null;
 	//doctor que actualmente esta seleccionado
 	public currentDoctor = "";
+
+	//fecha en la que se encuentra posicionado el usuario
+	currentDate: Date = new Date();
 	/*
 	* para saber si estan cargados los turnos, 
 	* como por defecto no hay turno es true inicialmente
 	*/
 	theOtherValue: boolean = true;
-	//defaultMonth es un valor por defecto para que la primera vez cargue si o si
-	currentMonth: number = defaultMonth; 
-	lowerRange: number = -1;
-	higherRange: 1;
+
+	//datos del turno para mostrar en el modal
+	turnData : TurnInfo;
+	
 
 
 	
@@ -95,70 +100,98 @@ export class MyTurnsComponent implements OnInit {
 		return  new Date(y, m +1, 0).getDate();
 	}
 
+	changeCurrentDate(event: Date){
+		this.currentDate = event;
+	}
+
 	getTurns(){
-		this.theOtherValue = false;
-		this.events = [];
-		//creo dos fechas que van a ser la de comienzo y final 
-		let from: Date;
-	    from = new Date();
-	    from.setDate(1);
-	    from.setHours(0);
-	    from.setMinutes(0);
-	    from.setSeconds(0);
-	    from.setMilliseconds(0);
+		if (this.currentDoctor != ""){
+			this.theOtherValue = false;
+			this.events = [];
+			//creo dos fechas que van a ser la de comienzo y final 
+			let from: Date;
+		    from = new Date();
+		    let to: Date;
+		    to = new Date();
 
-	    let to: Date;
-	    to = new Date();
-	    to.setDate(this.lastday(to.getFullYear(),to.getMonth()));
-	    to.setHours(0);
-	    to.setMinutes(0);
-	    to.setSeconds(0);
-	    to.setMilliseconds(0);
-	    this.setMonthAndYear(from,this.lowerRange);
-	    this.setMonthAndYear(to,this.higherRange);
+		    from.setDate(1);
+		    from.setHours(0);
+		    from.setMinutes(0);
+		    from.setSeconds(0);
+		    from.setMilliseconds(0);
+		    from.setMonth(this.currentDate.getMonth());
+		    from.setFullYear(this.currentDate.getFullYear());
 
-	    let id;
-	    let allDoctors = this.appComponent.getDoctors();
-	    for (var k in allDoctors){
-	    	if(allDoctors[k].nombre == this.currentDoctor)
-	    		id = allDoctors[k].codigo;
-	    }
 
-		console.log("Obteniendo turnos..")
-		this._dbPetitions.getTurnsDoctors(id, this.currentDoctor, from, to)
-		.subscribe((turns)=>{
-			if (turns){
-				console.log("Turnos obtenidos!")
-				// console.log(turns);
-				for (var i in turns) {
-					if (this.isObject(turns[i])){
-						
-						let date: Date = this.convertToDate(turns[i].dia, turns[i].hora);
+		    
+		    to.setDate(this.lastday(to.getFullYear(),to.getMonth()));
+		    to.setHours(0);
+		    to.setMinutes(0);
+		    to.setSeconds(0);
+		    to.setMilliseconds(0);
+		    to.setMonth(this.currentDate.getMonth());
+		    to.setFullYear(this.currentDate.getFullYear());
 
-						this.events.push({
-							start: date,
-							end: date,
-							title: turns[i].apellido,
-							color: colors.red,
-							actions: this.actions,
-							allDay: true,
-							resizable: {
-								beforeStart: true,
-								afterEnd: true
-							},
-  							draggable: true
-						})
+
+		    let id;
+		    let allDoctors = this.appComponent.getDoctors();
+		    for (var k in allDoctors){
+		    	if(allDoctors[k].nombre == this.currentDoctor)
+		    		id = allDoctors[k].codigo;
+		    }
+
+			console.log("Obteniendo turnos..")
+			this._dbPetitions.getTurnsDoctors(id, this.currentDoctor, from, to)
+			.subscribe((turns)=>{
+				if (turns){
+					console.log("Turnos obtenidos!")
+					// console.log(turns);
+					for (var i in turns) {
+						if (this.isObject(turns[i])){
+
+							let date: Date = this.convertToDate(turns[i].dia, turns[i].hora);
+							let e: CalendarEvent;
+							//con este pipe transformo la fecha en hora para el titulo
+							let pipe = new DatePipe('es-AR');
+							let hour = pipe.transform(date, 'shortTime');
+							let metadata = {
+									hora:hour,
+									afiliado: turns[i].afiliado,
+									apellido: turns[i].apellido,
+									coment: turns[i].coment,
+									fecha: pipe.transform(date, 'short'),
+									nombreMedico: turns[i].nombreMedico,
+									obra: turns[i].obra
+							}
+							this.events.push({
+								start: date,
+								end: date,
+								title: turns[i].apellido,
+								color: {
+										primary: turns[i].color,
+										secondary: turns[i].color
+										},
+								meta: metadata,
+								actions: this.actions,
+								allDay: true,
+								resizable: {
+									beforeStart: true,
+									afterEnd: true
+								},
+	  							draggable: true
+							})
+						}
+
+
 					}
-
-
+					this.refresh.next();
+					this.theOtherValue = true;
+					// this.appComponent.events = [];
+					// this.appComponent.events = this.events;
+					// this.appComponent.emitConfig(this.events);
 				}
-				this.refresh.next();
-				this.theOtherValue = true;
-				// this.appComponent.events = [];
-				// this.appComponent.events = this.events;
-				// this.appComponent.emitConfig(this.events);
-			}
-		});
+			});
+		}
 	}
 
 	//comprueba si val es un objeto o un tipo primitivo
@@ -166,42 +199,11 @@ export class MyTurnsComponent implements OnInit {
     	return val instanceof Object; 
 	}
 
-	//setea el mes y año correcto de acuerdo a lo seleccionado por el usuario
-	//difference sirve para el rango
-	setMonthAndYear(date: Date, difference: number){
-		let month;
-		let year;
-		/*
-		 * auxMont es el mes actual +-difference
-		 * con diffrenece ya dejo listo el mes para el rango que decida usar
-		 */
-		let auxMonth: number = this.currentMonth + difference;
-		if (auxMonth < 0)
-			/*
-			 * si el mes es del año anterior le sumo 13 para llevarlo al valor que debe ser
-			 * ejemplo: si es -2 => -2+13 = 11 (noviembre)
-			 */
-			month = auxMonth + 13; 
-		else
-			//si no lo dejo tal cual
-			month = auxMonth;
-
-
-		//si el mes es negativo entonces el año es anterior al actual
-		if ( auxMonth < 0 )
-			year = now.getFullYear() - Math.ceil(auxMonth/12) 
-		//si el mes es superior a 11 (diciembre) el año es posterior al actual
-		else if (auxMonth > 11 )
-			year = now.getFullYear() + Math.ceil(auxMonth/12) 
-		//si no es el año actual
-		else
-			year = now.getFullYear();
-		date.setMonth(month);
-		date.setFullYear(year);
-	}
+	
 
 	//convierto de un string con formato YYYY-MM-DD a un Date
   	convertToDate(date:String, hours: String):Date{
+
 		let d = new Date();
 		//DD-MM-YYYY
 		let second = date.lastIndexOf('-');
@@ -223,7 +225,6 @@ export class MyTurnsComponent implements OnInit {
 		d.setSeconds(0);
 		d.setHours(hour);
 
-		console.log(d);
 		return d;
 	}
 
@@ -292,17 +293,19 @@ events: CalendarEvent[] = [
   };
 
   actions: CalendarEventAction[] = [
-    {
+    { 
       label: '<i class="fa fa-fw fa-pencil"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
+      	console.log('Edited');
+        this.handleEvent(event);
       }
     },
     {
       label: '<i class="fa fa-fw fa-times"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.events = this.events.filter(iEvent => iEvent !== event);
-        this.handleEvent('Deleted', event);
+        console.log('Deleted');
+        this.handleEvent(event);
       }
     }
   ];
@@ -335,12 +338,16 @@ events: CalendarEvent[] = [
   }: CalendarEventTimesChangedEvent): void {
     event.start = newStart;
     event.end = newEnd;
-    this.handleEvent('Dropped or resized', event);
+    console.log('Dropped or resized');
+    this.handleEvent(event);
     this.refresh.next();
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
+  handleEvent(event: CalendarEvent): void {
+    this.modalData = { event, action: event.meta }; 
+    let JSONObject : TurnInfo = JSON.parse(event.meta);
+		this.turnData = JSONObject;
+		console.log(this.turnData);
     this.modal.open(this.modalContent, { size: 'lg' });
   }
 
@@ -366,31 +373,6 @@ addEvent(): void {
     });
     this.refresh.next();
 }
-
-
-  //calendar header functions
-
-updateTurns(month:number){
-  	// solo hago este seteo cuando el mes ya fue iniciado
-  	if ( this.currentMonth != defaultMonth )
-  		this.currentMonth = this.currentMonth + month;
-  	/*
-  	 * si es la primera vez o
-  	 * si el mes al que trato de acceder esta fuera del mes actual +- 1 
-  	 * y hay doctor seleccionado recargo los turnos
-  	 */
-  	if ( this.currentMonth == defaultMonth ){ //esto es para el caso de la primera vez
-  		//seteo el mes actual
-  		this.currentMonth = now.getMonth()+month;
-  		//obtengo los turnos solo si hay un medico seteado
-  		if (this.currentDoctor != "")
-  			this.getTurns();
-  	}
-  	else if (this.currentDoctor != "" && 
-  	   ( this.currentMonth < now.getMonth()+ this.lowerRange || 
-  	   	 this.currentMonth > now.getMonth()+ this.higherRange ) )
-  		this.getTurns();
-  }
 
 }
 

@@ -16,7 +16,5 @@ export class CalendarHeaderComponent {
 
   @Output() viewDateChange: EventEmitter<Date> = new EventEmitter();
 
-  laconsola(){
-  	console.log("asdasd");
-  }
+ 
 }

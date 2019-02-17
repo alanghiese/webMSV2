@@ -25,7 +25,7 @@ import { ExcelService } from './providers/excel.service';
 import { EncoderDecoderService } from './providers/encoder-decoder.service';
 import { DbPetitionsService } from './providers/db-petitions.service';
 import { dbPetitionsInterceptor } from './providers/db-petitions-interceptor';
-import { SessionProvider } from './providers/session.provider';
+
 
 
 
@@ -103,7 +103,6 @@ import { CalendarComponent } from './components/calendar/calendar.component'
 	AppRoutingModule,
     ExcelService,
 	EncoderDecoderService,
-    SessionProvider,
     DbPetitionsService,
     { provide: HTTP_INTERCEPTORS, useClass: dbPetitionsInterceptor, multi: true }
   ],

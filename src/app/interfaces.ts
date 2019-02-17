@@ -166,3 +166,29 @@ export interface coverageObject{
   nombre;
   value;
 }
+
+
+//interface de una respuesta del servicio para enviar emails
+export interface emailAPIResp{
+  data: Email;
+}
+
+export interface Email{
+  msg;
+  id;
+}
+
+
+/*
+ * interface para los turnos que se muestran en un modal
+ * al hacer click en un turno en el componente my-turns
+ */
+export interface TurnInfo{
+  hour: string;
+  affiliate: string;
+  surname: string;
+  coment: string;
+  date: string;
+  doctorName: string;
+  healthInsurance: string;
+}

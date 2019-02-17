@@ -33,77 +33,18 @@
 	
 	<!-- calendario -->
 
-
-	<div class="container">
-	  <!-- <mwl-demo-utils-calendar-header
-	  [(view)]="view"
-	  [(viewDate)]="viewDate"
-	  [locale]="locale">
-	</mwl-demo-utils-calendar-header> -->
-
 	<!-- Calendar header -->
 
+	<div class="container">
+    <mwl-demo-utils-calendar-header
+	  [(view)]="view"
+	  [(viewDate)]="viewDate"
+	  [locale]="locale"
+	  (viewDateChange) = "changeCurrentDate($event)">
+	</mwl-demo-utils-calendar-header> 
 
-	<div class="row text-center">
-      <div class="col-md-4">
-        <div class="btn-group">
-          <div
-            class="myButton buttonLeft"
-            mwlCalendarPreviousView
-            [view]="view"
-            [(viewDate)]="viewDate"
-            (click)="updateTurns(-1)"
-          >
-            Anterior
-          </div>
-          <div
-            class="myButton buttonMiddle"
-            mwlCalendarToday
-            [(viewDate)]="viewDate"
-            (click)="updateTurns(0)"
-          >
-            Hoy
-          </div>
-          <div
-            class="myButton buttonRight"
-            mwlCalendarNextView
-            [view]="view"
-            [(viewDate)]="viewDate"
-            (click)="updateTurns(1)"
-          >
-            Siguiente
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <h3>{{ viewDate | calendarDate: view + 'ViewTitle':locale }}</h3>
-      </div>
-      <div class="col-md-4">
-        <div class="btn-group">
-          <div
-            class="myButton buttonLeft"
-            (click)="viewChange.emit('month')"
-            [class.active]="view === 'month'"
-          >
-            Mes
-          </div>
-          <div
-            class="myButton buttonMiddle"
-            (click)="viewChange.emit('week')"
-            [class.active]="view === 'week'"
-          >
-            Semana
-          </div>
-          <div
-            class="myButton buttonRight"
-            (click)="viewChange.emit('day')"
-            [class.active]="view === 'day'"
-          >
-            Dia
-          </div>
-        </div>
-      </div>
-    </div>
+	
+
     <br />
 
 
@@ -118,14 +59,11 @@
 	      </button>
 	    </div>
 	    <div class="modal-body">
-	      <div>
-	        Action:
-	        <pre>{{ modalData?.action }}</pre>
-	      </div>
-	      <div>
-	        Event:
-	        <pre>{{ modalData?.event | json }}</pre>
-	      </div>
+	    	<div>
+	        	Meta:
+	       		<pre>{{ modalData?.action  | json }}</pre>
+	        </div>
+	      
 	    </div>
 	    <div class="modal-footer">
 	      <button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
@@ -140,7 +78,7 @@
 	      [refresh]="refresh"
 	      [activeDayIsOpen]="activeDayIsOpen"
 	      (dayClicked)="dayClicked($event.day)"
-	      (eventClicked)="handleEvent('Clicked', $event.event)"
+	      (eventClicked)="handleEvent($event.event)"
 	      (eventTimesChanged)="eventTimesChanged($event)"
 	      [locale]="locale">
 	    </mwl-calendar-month-view>
@@ -149,7 +87,7 @@
 	      [viewDate]="viewDate"
 	      [events]="events"
 	      [refresh]="refresh"
-	      (eventClicked)="handleEvent('Clicked', $event.event)"
+	      (eventClicked)="handleEvent($event.event)"
 	      (eventTimesChanged)="eventTimesChanged($event)"
 	      [locale]="locale">
 	    </mwl-calendar-week-view>
@@ -158,7 +96,7 @@
 	      [viewDate]="viewDate"
 	      [events]="events"
 	      [refresh]="refresh"
-	      (eventClicked)="handleEvent('Clicked', $event.event)"
+	      (eventClicked)="handleEvent($event.event)"
 	      (eventTimesChanged)="eventTimesChanged($event)"
 	      [locale]="locale">
 	    </mwl-calendar-day-view>

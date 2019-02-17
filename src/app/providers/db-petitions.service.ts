@@ -2,17 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { API_ENDPOINTS, API_URL_BASE, PARAMETERS, ACTIONS, COMMON_WORDS } from '../constants';
-import { UserCredentials, LoginResponse, JSONResponse, Client, changeClientResponse } from '../interfaces';
-import { SessionProvider } from './session.provider';
+import { API_ENDPOINTS, API_URL_BASE, PARAMETERS, ACTIONS, COMMON_WORDS, EMAIL_PARAMETERS, DESTINATION_DATA } from '../constants';
+import { UserCredentials, LoginResponse, JSONResponse, Client, changeClientResponse, emailAPIResp, Email } from '../interfaces';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class DbPetitionsService {
 
-	constructor(public http: HttpClient, 
-				public session: SessionProvider){}
+	constructor(public http: HttpClient){}
 
 
 	//me conecta a la db, ademas me da data importante
@@ -28,7 +27,6 @@ export class DbPetitionsService {
 			map(resp => resp.data),
 			tap(resp => {
 			console.log(`logged in with user id=${credentials.enrollmentId}`);
-          this.session.setActiveClient(resp);
 		}),
 			catchError(this.handleAndThrow(`login id=${credentials.enrollmentId}`))
 		);
@@ -49,12 +47,10 @@ export class DbPetitionsService {
 		.pipe(
 			map(
 				resp => { 
-          			this.session.setActiveClient(resp.data);
 					return resp;
 				}),
 			tap(resp => {
 			console.log(`connected to client=${resp.data.cliente}`);
-          	this.session.setActiveClient(resp.data);
 		}),
 
 			catchError(this.handleAndThrow(`connect to client=${dataSource}`))
@@ -166,6 +162,62 @@ export class DbPetitionsService {
 	  }
 
 
+
+	//envia el mensaje (msg) de senderName al email predeterminado
+	sendEmail(senderEmail: string, msg: string, senderName: string) : Observable<Email>  {
+		//seteo los valores del email predeterminado
+		
+
+		let url: string = `${API_URL_BASE}/${API_ENDPOINTS.sendEmail}`;
+		let params = new HttpParams()
+			.set(PARAMETERS.ACTION, ACTIONS.ENVIAR_MENSAJE_CONTACTO)
+			.set(EMAIL_PARAMETERS.SENDER_EMAIL, senderEmail)
+			.set(EMAIL_PARAMETERS.SENDER_NAME, senderName)
+			.set(EMAIL_PARAMETERS.MSG, msg)
+			.set(EMAIL_PARAMETERS.DESTINATION_EMAIL, DESTINATION_DATA.EMAIL)
+			.set(EMAIL_PARAMETERS.DESTINATION_NAME, DESTINATION_DATA.NAME)
+
+		return this.http.get<emailAPIResp>(url, {params: params})
+		.pipe(
+			map(resp => resp.data),
+			tap(resp => {
+				console.log(resp)
+			}),
+			catchError(this.handleAndThrow("Error al enviar el mensaje"))
+		)
+	}
+
+
+	//envia el mensaje (msg) de senderName al email del parametro
+	sendEmailTo(senderEmail: string, msg: string, senderName: string, 
+			  destinationEmail: string, destinationName: string) : Observable<Email>  {
+		//seteo los valores del email predeterminado
+		
+
+		let url: string = `${API_URL_BASE}/${API_ENDPOINTS.sendEmail}`;
+		let params = new HttpParams()
+			.set(PARAMETERS.ACTION, ACTIONS.ENVIAR_MENSAJE_CONTACTO)
+			.set(EMAIL_PARAMETERS.SENDER_EMAIL, senderEmail)
+			.set(EMAIL_PARAMETERS.SENDER_NAME, senderName)
+			.set(EMAIL_PARAMETERS.MSG, msg)
+			.set(EMAIL_PARAMETERS.DESTINATION_EMAIL, destinationEmail)
+			.set(EMAIL_PARAMETERS.DESTINATION_NAME, destinationName)
+
+		return this.http.get<emailAPIResp>(url, {params: params})
+		.pipe(
+			map(resp => resp.data),
+			tap(resp => {
+				console.log(resp)
+			}),
+			catchError(this.handleAndThrow("Error al enviar el mensaje"))
+		)
+	}
+
+
+
+
+//uitilidades
+
 	/**
 	* Devuelve un string con la descripción del error.
 	* @param err - error
@@ -210,7 +262,7 @@ export class DbPetitionsService {
 		return date.getUTCFullYear() + '-'
 									+ pad(date.getUTCMonth() + 1) + '-'
 									+ pad(date.getUTCDate());
-}
+	}
 
 
 
