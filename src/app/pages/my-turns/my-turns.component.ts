@@ -344,8 +344,9 @@ events: CalendarEvent[] = [
   }
 
   handleEvent(event: CalendarEvent): void {
-    this.modalData = { event, action: event.meta }; 
-    let JSONObject : TurnInfo = JSON.parse(event.meta);
+		this.modalData = { event, action: event.meta }; 
+		let aux = JSON.stringify(event.meta);
+    let JSONObject : TurnInfo = JSON.parse(aux);
 		this.turnData = JSONObject;
 		console.log(this.turnData);
     this.modal.open(this.modalContent, { size: 'lg' });

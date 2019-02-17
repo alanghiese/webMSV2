@@ -13,12 +13,15 @@ import { CalendarEvent } from 'angular-calendar';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html?v=${new Date().getTime()',
-  styleUrls: ['./app.component.css?v=${new Date().getTime()'],
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
   providers: [ DbPetitionsService, EncoderDecoderService ]
 })
 
-//CON ?v=${new Date().getTime() EN EL @Component fuerzo al navegador a eliminar el cache
+
+/*CON ?v=${new Date().getTime() EN EL @Component fuerzo al navegador a eliminar el cache
+ * SOLO SIRVE PARA DEV
+ */
 export class AppComponent {
 
 	/*las variables no tienen ninguna visibilidad especificado para que sean publicas por defecto.

@@ -1,26 +1,25 @@
-
-
 <div *ngIf="doctorsReady()">
 	<div class="isa_warning">
-	     <i class="fa fa-warning"></i>
-	     Esta seccion se encuentra en desarrollo
+		<i class="fa fa-warning"></i>
+		Esta seccion se encuentra en desarrollo
 	</div>
 
 	<div class="row head">
 		<div class="selectDoctor ">
-			<div class="input-group input-custom" >
+			<div class="input-group input-custom">
 				<div class="input-group-prepend">
 					<span class="input-group-text" id="basic-addon1" title="Seleccione médico">Médico</span>
 				</div>
 				<select title="Seleccione médico" class="form-control input-doctor-select" [(ngModel)]="this.currentDoctor">
 					<option></option>
-					<option *ngFor="let doc of doctors " [selected]="this.appComponent.filter.selDoctor === doc.nombre">{{ doc.nombre }}</option>
+					<option *ngFor="let doc of doctors " [selected]="this.appComponent.filter.selDoctor === doc.nombre">
+						{{ doc.nombre }}</option>
 				</select>
 			</div>
 
 		</div>
 
-		<div class="buttons padding" >
+		<div class="buttons padding">
 			<button class="btn-custom" title="Buscar" (click)="getTurns()">Buscar</button>
 
 
@@ -30,161 +29,126 @@
 		</div>
 	</div>
 
-	
+
 	<!-- calendario -->
 
 	<!-- Calendar header -->
 
 	<div class="container">
-    <mwl-demo-utils-calendar-header
-	  [(view)]="view"
-	  [(viewDate)]="viewDate"
-	  [locale]="locale"
-	  (viewDateChange) = "changeCurrentDate($event)">
-	</mwl-demo-utils-calendar-header> 
-
-	
-
-    <br />
+		<mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate" [locale]="locale"
+			(viewDateChange)="changeCurrentDate($event)">
+		</mwl-demo-utils-calendar-header>
 
 
-	<!-- calendar body -->
+
+		<br />
 
 
-	  <ng-template #modalContent let-close="close">
-	    <div class="modal-header">
-	      <h5 class="modal-title">Event action occurred</h5>
-	      <button type="button" class="close" (click)="close()">
-	        <span aria-hidden="true">&times;</span>
-	      </button>
-	    </div>
-	    <div class="modal-body">
-	    	<div>
-	        	Meta:
-	       		<pre>{{ modalData?.action  | json }}</pre>
-	        </div>
-	      
-	    </div>
-	    <div class="modal-footer">
-	      <button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
-	    </div>
-	  </ng-template>
+		<!-- calendar body -->
 
-	  <div class="calendar" [ngSwitch]="view">
-	    <mwl-calendar-month-view
-	      *ngSwitchCase="CalendarView.Month"
-	      [viewDate]="viewDate"
-	      [events]="events"
-	      [refresh]="refresh"
-	      [activeDayIsOpen]="activeDayIsOpen"
-	      (dayClicked)="dayClicked($event.day)"
-	      (eventClicked)="handleEvent($event.event)"
-	      (eventTimesChanged)="eventTimesChanged($event)"
-	      [locale]="locale">
-	    </mwl-calendar-month-view>
-	    <mwl-calendar-week-view
-	      *ngSwitchCase="CalendarView.Week"
-	      [viewDate]="viewDate"
-	      [events]="events"
-	      [refresh]="refresh"
-	      (eventClicked)="handleEvent($event.event)"
-	      (eventTimesChanged)="eventTimesChanged($event)"
-	      [locale]="locale">
-	    </mwl-calendar-week-view>
-	    <mwl-calendar-day-view
-	      *ngSwitchCase="CalendarView.Day"
-	      [viewDate]="viewDate"
-	      [events]="events"
-	      [refresh]="refresh"
-	      (eventClicked)="handleEvent($event.event)"
-	      (eventTimesChanged)="eventTimesChanged($event)"
-	      [locale]="locale">
-	    </mwl-calendar-day-view>
-	  </div>
 
-	  <br><br><br>
+		<ng-template #modalContent let-close="close">
+			<div class="modal-header">
+				<h5 class="modal-title">Turno de: {{ turnData.apellido }}</h5>
+				<button type="button" class="close" (click)="close()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div>
+					<h3>Informacion del turno:</h3>
+					<!-- <pre>{{ modalData?.action  | json }}</pre> -->
+					<p>
+						<span>Nombre del paciente: {{ turnData.apellido }}</span> <br>
+						<span>Afiliado Nro: {{ turnData.afiliado }}</span> <br>
+						<span>Obra social: {{ turnData.obra }}</span> <br>
+						<span>Fecha del turno: {{ turnData.fecha }}</span> <br>
+						<span>Hora del turno: {{ turnData.hora }}</span> <br>
+						<span>Nombre del medico: {{ turnData.nombreMedico }}</span> <br>
+						<span>Comentarios: {{ turnData.coment }}</span> <br>
+					</p>
+				</div>
 
-	  <h3>
-	    Edit events
-	    <button
-	      class="btn btn-primary pull-right"
-	      (click)="addEvent()">
-	      Add new
-	    </button>
-	    <div class="clearfix"></div>
-	  </h3>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
+			</div>
+		</ng-template>
 
-	  <table class="table table-bordered">
+		<div class="calendar" [ngSwitch]="view">
+			<mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
+				[refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+				(eventClicked)="handleEvent($event.event)" (eventTimesChanged)="eventTimesChanged($event)" [locale]="locale">
+			</mwl-calendar-month-view>
+			<mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
+				[refresh]="refresh" (eventClicked)="handleEvent($event.event)" (eventTimesChanged)="eventTimesChanged($event)"
+				[locale]="locale">
+			</mwl-calendar-week-view>
+			<mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
+				[refresh]="refresh" (eventClicked)="handleEvent($event.event)" (eventTimesChanged)="eventTimesChanged($event)"
+				[locale]="locale">
+			</mwl-calendar-day-view>
+		</div>
 
-	    <thead>
-	      <tr>
-	        <th>Title</th>
-	        <th>Primary color</th>
-	        <th>Secondary color</th>
-	        <th>Starts at</th>
-	        <th>Ends at</th>
-	        <th>Remove</th>
-	      </tr>
-	    </thead>
+		<br><br><br>
 
-	    <tbody>
-	      <tr *ngFor="let event of events; let index = index">
-	        <td>
-	          <input
-	            type="text"
-	            class="form-control"
-	            [(ngModel)]="event.title"
-	            (keyup)="refresh.next()">
-	        </td>
-	        <td>
-	          <input
-	            type="color"
-	            [(ngModel)]="event.color.primary"
-	            (change)="refresh.next()">
-	        </td>
-	        <td>
-	          <input
-	            type="color"
-	            [(ngModel)]="event.color.secondary"
-	            (change)="refresh.next()">
-	        </td>
-	        <td>
-	          <input
-	            class="form-control"
-	            type="text"
-	            [(ngModel)]="event.start"
-	            (ngModelChange)="refresh.next()"
-	            placeholder="Not set">
-	        </td>
-	        <td>
-	          <input
-	            class="form-control"
-	            type="text"
-	            [(ngModel)]="event.end"
-	            (ngModelChange)="refresh.next()"
-	            placeholder="Not set">
-	        </td>
-	        <td>
-	          <button
-	            class="btn btn-danger"
-	            (click)="events.splice(index, 1); refresh.next()">
-	            Delete
-	          </button>
-	        </td>
-	      </tr>
-	    </tbody>
+		<h3>
+			Edit events
+			<button class="btn btn-primary pull-right" (click)="addEvent()">
+				Add new
+			</button>
+			<div class="clearfix"></div>
+		</h3>
 
-	  </table>
+		<table class="table table-bordered">
+
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Primary color</th>
+					<th>Secondary color</th>
+					<th>Starts at</th>
+					<th>Ends at</th>
+					<th>Remove</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr *ngFor="let event of events; let index = index">
+					<td>
+						<input type="text" class="form-control" [(ngModel)]="event.title" (keyup)="refresh.next()">
+					</td>
+					<td>
+						<input type="color" [(ngModel)]="event.color.primary" (change)="refresh.next()">
+					</td>
+					<td>
+						<input type="color" [(ngModel)]="event.color.secondary" (change)="refresh.next()">
+					</td>
+					<td>
+						<input class="form-control" type="text" [(ngModel)]="event.start" (ngModelChange)="refresh.next()"
+							placeholder="Not set">
+					</td>
+					<td>
+						<input class="form-control" type="text" [(ngModel)]="event.end" (ngModelChange)="refresh.next()"
+							placeholder="Not set">
+					</td>
+					<td>
+						<button class="btn btn-danger" (click)="events.splice(index, 1); refresh.next()">
+							Delete
+						</button>
+					</td>
+				</tr>
+			</tbody>
+
+		</table>
 	</div>
 
 
 
-	
+
 
 </div>
 
-<div *ngIf="!doctorsReady()" >
+<div *ngIf="!doctorsReady()">
 	<loading></loading>
 </div>
-
-

@@ -184,11 +184,11 @@ export interface Email{
  * al hacer click en un turno en el componente my-turns
  */
 export interface TurnInfo{
-  hour: string;
-  affiliate: string;
-  surname: string;
+  hora: string;
+  afiliado: string;
+  apellido: string;
   coment: string;
-  date: string;
-  doctorName: string;
-  healthInsurance: string;
+  fecha: string;
+  nombreMedico: string;
+  obra: string;
 }
