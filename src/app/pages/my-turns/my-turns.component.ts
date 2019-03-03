@@ -166,7 +166,7 @@ export class MyTurnsComponent implements OnInit {
 							this.events.push({
 								start: date,
 								end: date,
-								title: turns[i].apellido,
+								title: turns[i].hora + " " + turns[i].apellido,
 								color: {
 										primary: turns[i].color,
 										secondary: turns[i].color
@@ -348,8 +348,7 @@ events: CalendarEvent[] = [
 		let aux = JSON.stringify(event.meta);
     let JSONObject : TurnInfo = JSON.parse(aux);
 		this.turnData = JSONObject;
-		console.log(this.turnData);
-    this.modal.open(this.modalContent, { size: 'lg' });
+		this.modal.open(this.modalContent, { size: 'lg' });
   }
 
   
@@ -360,18 +359,37 @@ events: CalendarEvent[] = [
 addEvent(): void {
     let day: Date;
     day = new Date();
-    day.setDate(24);
-    this.events.push({
-      title: 'Evento nuevo',
-      start: startOfDay(new Date()),
-      end: day,
-      color: colors.red,
-      draggable: true,
-      // resizable: {
-      //   beforeStart: true,
-      //   afterEnd: true
-      // }
-    });
+		day.setDate(24);
+		let metadata = {
+			hora:"8:00",
+			afiliado: "afiliado",
+			apellido: "apellido",
+			coment: "coment",
+			fecha: day,
+			nombreMedico: "nombreMedico",
+			obra: "obra"
+	}
+	
+	this.events.push({
+		start: day,
+		end: day,
+		title: "Titulo de ejemplo",
+		color: {
+				primary: "#fff",
+				secondary: "#fff"
+				},
+		meta: metadata,
+		actions: this.actions,
+		allDay: true,
+		resizable: {
+			beforeStart: true,
+			afterEnd: true
+		},
+			draggable: true
+	})
+
+
+
     this.refresh.next();
 }
 

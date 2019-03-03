@@ -10,7 +10,8 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text" id="basic-addon1" title="Seleccione médico">Médico</span>
 				</div>
-				<select title="Seleccione médico" class="form-control input-doctor-select" [(ngModel)]="this.currentDoctor">
+				<select title="Seleccione médico" class="form-control input-doctor-select"
+					[(ngModel)]="this.currentDoctor">
 					<option></option>
 					<option *ngFor="let doc of doctors " [selected]="this.appComponent.filter.selDoctor === doc.nombre">
 						{{ doc.nombre }}</option>
@@ -47,50 +48,87 @@
 		<!-- calendar body -->
 
 
-		<ng-template #modalContent let-close="close">
+		<ng-template #modalContent let-close="close" >
 			<div class="modal-header">
-				<h5 class="modal-title">Turno de: {{ turnData.apellido }}</h5>
+				<h1 class="modal-title">Turno de: {{ turnData.apellido }}</h1>
 				<button type="button" class="close" (click)="close()">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
 				<div>
-					<h3>Informacion del turno:</h3>
-					<!-- <pre>{{ modalData?.action  | json }}</pre> -->
-					<p>
-						<span>Nombre del paciente: {{ turnData.apellido }}</span> <br>
-						<span>Afiliado Nro: {{ turnData.afiliado }}</span> <br>
-						<span>Obra social: {{ turnData.obra }}</span> <br>
-						<span>Fecha del turno: {{ turnData.fecha }}</span> <br>
-						<span>Hora del turno: {{ turnData.hora }}</span> <br>
-						<span>Nombre del medico: {{ turnData.nombreMedico }}</span> <br>
-						<span>Comentarios: {{ turnData.coment }}</span> <br>
-					</p>
+					<!-- <h4 class="modal-title">Informacion del turno:</h4> -->
+					<div class="row">
+						<span class="col-6">
+							<label class="col tag" for="name">Nombre del paciente:</label>
+							<input class="col basic-slide" id="name" type="text" placeholder="Nombre del paciente"
+								disabled title="Nombre del paciente" [(ngModel)]="this.turnData.apellido" />
+						</span>
+						<span class="col-6">
+							<label class="col tag" for="nro">Numero de afiliado:</label>
+							<input class="col basic-slide" id="nro" type="text" placeholder="Numero de afiliado"
+								disabled title="Numero de afiliado" [(ngModel)]="this.turnData.afiliado" />
+						</span>
+						<span class="col-6">
+							<label class="col tag" for="secureid">Obra social:</label>
+							<input class="col basic-slide" id="secureid" type="text" placeholder="Obra social" disabled
+								title="Obra social" [(ngModel)]="this.turnData.obra" />
+						</span>
+						<span class="col-6">
+							<label class="col tag" for="dateturn">Fecha del turno:</label>
+							<input class="col basic-slide" id="dateturn" type="text" placeholder="Fecha del turno"
+								disabled title="Fecha del turno" [(ngModel)]="this.turnData.fecha" />
+						</span>
+						<span class="col-6">
+							<label class="col tag" for="turnhour">Hora del turno:</label>
+							<input class="col basic-slide" id="name" type="turnhour" placeholder="Hora del turno"
+								disabled title="Hora del turno" [(ngModel)]="this.turnData.hora" />
+						</span>
+						<span class="col-6">
+							<label class="col tag" for="doctorname">Nombre del medico:</label>
+							<input class="col basic-slide" id="doctorname" type="text" placeholder="Nombre del medico"
+								disabled title="Nombre del medico" [(ngModel)]="this.turnData.nombreMedico" />
+						</span>
+						<span class="col-12">
+							<label class="col tag" for="coment">Comentarios:</label>
+							<!-- <input class="col-9 basic-slide sohigh" id="coment" type="text" placeholder="Comentarios" disabled
+								title="Comentarios" [(ngModel)]="this.turnData.coment"/> -->
+							<textarea class="col basic-slide" id="coment" name="coment" placeholder="Comentarios"
+								[(ngModel)]="this.turnData.coment" disabled autocomplete="off" #messageInput="ngModel">
+							</textarea>
+						</span>
+
+					</div>
 				</div>
 
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
+				<button type="button" class="btn btn-outline-secondary" (click)="close()">CERRAR</button>
 			</div>
 		</ng-template>
 
 		<div class="calendar" [ngSwitch]="view">
 			<mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
 				[refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
-				(eventClicked)="handleEvent($event.event)" (eventTimesChanged)="eventTimesChanged($event)" [locale]="locale">
+				(eventClicked)="handleEvent($event.event)" (eventTimesChanged)="eventTimesChanged($event)"
+				[locale]="locale">
 			</mwl-calendar-month-view>
 			<mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
-				[refresh]="refresh" (eventClicked)="handleEvent($event.event)" (eventTimesChanged)="eventTimesChanged($event)"
-				[locale]="locale">
+				[refresh]="refresh" (eventClicked)="handleEvent($event.event)"
+				(eventTimesChanged)="eventTimesChanged($event)" [locale]="locale">
 			</mwl-calendar-week-view>
 			<mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
-				[refresh]="refresh" (eventClicked)="handleEvent($event.event)" (eventTimesChanged)="eventTimesChanged($event)"
-				[locale]="locale">
+				[refresh]="refresh" (eventClicked)="handleEvent($event.event)"
+				(eventTimesChanged)="eventTimesChanged($event)" [locale]="locale">
 			</mwl-calendar-day-view>
 		</div>
-
+		<p></p>
 		<br><br><br>
+
+
+
+
+
 
 		<h3>
 			Edit events
@@ -100,7 +138,7 @@
 			<div class="clearfix"></div>
 		</h3>
 
-		<table class="table table-bordered">
+		<!-- <table class="table table-bordered">
 
 			<thead>
 				<tr>
@@ -140,8 +178,9 @@
 				</tr>
 			</tbody>
 
-		</table>
+		</table> -->
 	</div>
+
 
 
 

@@ -117,3 +117,70 @@ body{
 .myButton:hover{
 	transform: scale(1.05);
 }
+
+
+
+.calendar ,.container{
+	text-align: center !important;
+	width: 700px;
+}
+.container{
+	margin-bottom: 50px;
+}
+
+.basic-slide {
+	display: inline-block;
+	width: 100%;
+	padding: 7px;
+	font-family: "Open Sans", sans;
+	font-weight: 400;
+	/* color: #377D6A; */
+	background: #efefef;
+	border: 0;
+	border-radius: 3px;
+	outline: 0;
+	/* text-indent: 70px;  */
+
+	
+	/* &::-webkit-input-placeholder {
+	  color: #efefef;
+	  text-indent: 0;
+	  font-weight: 300;
+	}
+   */
+	
+  }
+
+
+
+
+.sohigh{
+	height: 100px;
+}
+
+textarea{
+	resize: none;
+	overflow: auto;
+}
+
+.tag{
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+	background-color: rgb(255, 135, 37);
+	margin-bottom: 0px !important;
+	margin-top: 15px !important;
+	max-width: 50%;
+	padding: 2px;
+	text-align: center;
+}
+
+.titletag{
+	max-width: 100%;
+}
+
+.modal-body, .modal-header, .modal-footer{
+	background-color: lightgray !important;
+}
+
